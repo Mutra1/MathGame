@@ -3,6 +3,9 @@ package com.example.murat.mathgame;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.EditText;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +16,9 @@ public class MainActivity extends AppCompatActivity {
 
     File file;
     Game game;
+    TextView question1, question2, question3, question4;
+    EditText studentAnswer;
+    Button addition, subtraction, multiplication, division;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

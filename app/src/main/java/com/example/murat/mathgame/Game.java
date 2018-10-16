@@ -23,7 +23,7 @@ public class Game {
     public void createNewEquationList(int type) {
         equationList.clear();
         for(int e = 0; e < 4; e++) {
-            equationList.add(new Equation(createEquation(type)));
+            equationList.add(new Equation(createEquation(type), type));
         }
     }
 
