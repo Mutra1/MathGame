@@ -10,64 +10,29 @@
         android:id="@+id/addition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="461dp"
+        android:layout_marginBottom="295dp"
         android:text="Addition"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/subtraction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="303dp"
+        android:layout_marginBottom="295dp"
         android:text="Subtraction"
-        tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addition"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/multiplication"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Multiplication"
-        tools:layout_editor_absoluteX="300dp"
-        tools:layout_editor_absoluteY="16dp" />
-
-    <Button
-        android:id="@+id/division"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Division"
-        tools:layout_editor_absoluteX="472dp"
-        tools:layout_editor_absoluteY="16dp" />
-
-    <TextView
-        android:id="@+id/question1"
-        android:layout_width="161dp"
-        android:layout_height="33dp"
-        android:text="Question 1"
-        tools:layout_editor_absoluteX="197dp"
-        tools:layout_editor_absoluteY="86dp" />
-
-    <TextView
-        android:id="@+id/question2"
-        android:layout_width="162dp"
-        android:layout_height="39dp"
-        android:text="Question 2"
-        tools:layout_editor_absoluteX="197dp"
-        tools:layout_editor_absoluteY="138dp" />
-
-    <TextView
-        android:id="@+id/question3"
-        android:layout_width="163dp"
-        android:layout_height="35dp"
-        android:text="Question 3"
-        tools:layout_editor_absoluteX="197dp"
-        tools:layout_editor_absoluteY="186dp" />
-
-    <TextView
-        android:id="@+id/question4"
-        android:layout_width="163dp"
-        android:layout_height="38dp"
-        android:text="Question 4"
-        tools:layout_editor_absoluteX="197dp"
-        tools:layout_editor_absoluteY="237dp" />
 
 </android.support.constraint.ConstraintLayout>
