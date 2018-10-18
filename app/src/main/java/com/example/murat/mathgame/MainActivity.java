@@ -147,10 +147,14 @@ public class MainActivity extends AppCompatActivity {
     //Checks to see if the answer is correct. If it is, it updates the labels to show their tokens.
     private void checkAnswer(double guess) {
         if(game.getChosenEquation() != null) {
+            System.out.println("yeah");
             if(game.checkAnswer(guess)) {
+                System.out.println("wow");
                 game.setTokens(game.getTokens() + (1 + game.getChosenEquation().getValue()));
                 //saveProgress();
-                //update token labels
+                tokenView.setText(game.getTokens() + "");
+                game.createNewEquationList(game.getEquationList().get(0).getType());
+                showProblems();
             }
         }
     }
@@ -162,6 +166,10 @@ public class MainActivity extends AppCompatActivity {
         question2.setText(game.getEquationList().get(1).getEquation());
         question3.setText(game.getEquationList().get(2).getEquation());
         question4.setText(game.getEquationList().get(3).getEquation());
+        question1.setTextColor(0xFFCE8327);
+        question2.setTextColor(0xFFCE8327);
+        question3.setTextColor(0xFFCE8327);
+        question4.setTextColor(0xFFCE8327);
     }
 
 

@@ -10,6 +10,7 @@ public class Equation {
         equation = pequation;
         type = ptype;
         chosen = false;
+        value = 0;
         switch(type) {
             case 0: setAnswer("+"); break;
             case 1: setAnswer("-"); break;
@@ -21,16 +22,26 @@ public class Equation {
 
     //Calculates the answer to the equation.
     private void setAnswer(String type) {
-        double num1 = Integer.parseInt(equation.substring(0, equation.indexOf(type) - 1));
-        double num2 = Integer.parseInt(equation.substring(equation.indexOf(type) + 1));
+        double num1 = Double.parseDouble(equation.substring(0, equation.indexOf(type) - 1));
+        double num2 = Double.parseDouble(equation.substring(equation.indexOf(type) + 1));
+        System.out.println("num1: " + num1);
+        System.out.println("num2: " + num2);
         switch(type) {
-            case "+": answer = num1+num2; break;
-            case "-": answer = num1-num2; break;
-            case "*": answer = num1*num2; break;
-            case "/": answer = num1/num2; break;
+            case "+": answer = num1+num2; answer = changeNum(answer); break;
+            case "-": answer = num1-num2; answer = changeNum(answer); break;
+            case "*": answer = num1*num2; answer = changeNum(answer); break;
+            case "/": answer = num1/num2; answer = changeNum(answer); break;
         }
     }
 
+    //Rounds numbers to the tenth place.
+    private double changeNum(double num) {
+        num*=100;
+        num+=.50;
+        num = Math.floor(num);
+        num/=100;
+        return num;
+    }
 
     public void setChosen(boolean choice) { chosen = choice; }
 

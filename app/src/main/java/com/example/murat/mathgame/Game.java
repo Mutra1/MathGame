@@ -41,12 +41,10 @@ public class Game {
         String equation = "";
         double num1 = (Math.random() * 19) + 1;
         double num2 = (Math.random() * 19) + 1;
-        System.out.println("\nnum1: " + num1);
-        System.out.println("num2: " + num2);
+//        System.out.println("\nnum1: " + num1);
+//        System.out.println("num2: " + num2);
         num1 = changeNum(num1);
         num2 = changeNum(num2);
-        System.out.println("\npostnum1: " + num1);
-        System.out.println("postnum2: " + num2);
         equation += (num1 + " ");
         switch(type) {
             case 0: equation += "+ "; break;
@@ -56,13 +54,14 @@ public class Game {
             default: break;
         }
         equation += num2;
-        System.out.println("Equation: " + equation);
         return equation;
     }
 
 
     //Checks to see if the answer the player gave is the same as the real answer.
     public boolean checkAnswer(double guess) {
+        System.out.println("ANSWER: " + getChosenEquation().getAnswer());
+        System.out.println("GUESS: " + guess);
         if(guess == getChosenEquation().getAnswer()) {
             return true;
         }
@@ -84,6 +83,7 @@ public class Game {
     //Rounds numbers to the tenth place.
     private double changeNum(double num) {
         num*=100;
+        num+=.50;
         num = Math.floor(num);
         num/=100;
         return num;
