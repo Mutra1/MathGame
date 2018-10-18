@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.EditText;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
     File file;
     Game game;
-    TextView question1, question2, question3, question4;
+    TextView question1, question2, question3, question4, tokenView;
     EditText editText;
-    Button addition, subtraction, multiplication, division, shuffle, enterAnswer;
+    Button addition, subtraction, multiplication, division, shuffle, enterAnswer, shopButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         file = new File(getFilesDir(), "tokensandbadges.txt");
         game = new Game();
-
+        addition = (Button)findViewById(R.id.addition);
+        subtraction = (Button)findViewById(R.id.subtraction);
+        multiplication = (Button)findViewById(R.id.multiplication);
+        division = (Button)findViewById(R.id.division);
+        shuffle = (Button)findViewById(R.id.shuffle);
+        enterAnswer = (Button)findViewById(R.id.enterAnswer);
+        shopButton = (Button)findViewById(R.id.shopButton);
+        editText = (EditText)findViewById(R.id.editText);
+        question1 = (TextView)findViewById(R.id.question1);
+        question2 = (TextView)findViewById(R.id.question2);
+        question3 = (TextView)findViewById(R.id.question3);
+        question4 = (TextView)findViewById(R.id.question4);
+        tokenView = (TextView)findViewById(R.id.tokenView);
 
 
         addition.setOnClickListener(new View.OnClickListener() {
