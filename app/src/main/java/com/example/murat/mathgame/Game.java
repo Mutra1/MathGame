@@ -1,5 +1,6 @@
 package com.example.murat.mathgame;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -9,15 +10,9 @@ public class Game {
     public Game() {
         tokens = 0;
         badges = 0;
+        equationList = new ArrayList<>();
     }
 
-    public void setTokens(int newtokens) {
-        tokens = newtokens;
-    }
-
-    public void setBadges(int newbadges) {
-        badges = newbadges;
-    }
 
     //Makes a new list of equations
     public void createNewEquationList(int type) {
@@ -27,6 +22,20 @@ public class Game {
         }
     }
 
+
+    //Sets the equation to be chosen, and the rest of the equations to not be chosen.
+    public void setChosen(int choice) {
+        for(int i = 0; i < equationList.size(); i++) {
+            if(i == choice) {
+                equationList.get(i).setChosen(true);
+            }
+            else {
+                equationList.get(i).setChosen(false);
+            }
+        }
+    }
+
+
     //Creates the "equation"
     private String createEquation(int type) {
         String equation = "";
@@ -34,6 +43,10 @@ public class Game {
         double num2 = (Math.random() * 19) + 1;
         System.out.println("\nnum1: " + num1);
         System.out.println("num2: " + num2);
+        num1 = changeNum(num1);
+        num2 = changeNum(num2);
+        System.out.println("\npostnum1: " + num1);
+        System.out.println("postnum2: " + num2);
         equation += (num1 + " ");
         switch(type) {
             case 0: equation += "+ "; break;
@@ -45,6 +58,43 @@ public class Game {
         equation += num2;
         System.out.println("Equation: " + equation);
         return equation;
+    }
+
+
+    //Checks to see if the answer the player gave is the same as the real answer.
+    public boolean checkAnswer(double guess) {
+        if(guess == getChosenEquation().getAnswer()) {
+            return true;
+        }
+        return false;
+    }
+
+
+    //Returns the equation that has been selected.
+    public Equation getChosenEquation() {
+        for(Equation equation : equationList) {
+            if(equation.isChosen()) {
+                return equation;
+            }
+        }
+        return null;
+    }
+
+
+    //Rounds numbers to the tenth place.
+    private double changeNum(double num) {
+        num*=100;
+        num = Math.floor(num);
+        num/=100;
+        return num;
+    }
+
+    public void setTokens(int newtokens) {
+        tokens = newtokens;
+    }
+
+    public void setBadges(int newbadges) {
+        badges = newbadges;
     }
 
     public int getTokens() {

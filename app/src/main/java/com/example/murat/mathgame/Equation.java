@@ -2,18 +2,22 @@ package com.example.murat.mathgame;
 
 public class Equation {
     private String equation;
-    private int value;
+    private int value, type;
     private double answer;
+    private boolean chosen;
 
     public Equation(String pequation, int ptype) {
         equation = pequation;
-        switch(ptype) {
+        type = ptype;
+        chosen = false;
+        switch(type) {
             case 0: setAnswer("+"); break;
             case 1: setAnswer("-"); break;
             case 2: setAnswer("*"); break;
             case 3: setAnswer("/"); break;
         }
     }
+
 
     //Calculates the answer to the equation.
     private void setAnswer(String type) {
@@ -27,6 +31,9 @@ public class Equation {
         }
     }
 
+
+    public void setChosen(boolean choice) { chosen = choice; }
+
     public String getEquation() {
         return equation;
     }
@@ -35,7 +42,13 @@ public class Equation {
         return answer;
     }
 
-//    public void setEquation() {
-//
-//    }
+    public int getValue() {
+        return value;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public boolean isChosen() { return chosen; }
 }
