@@ -22,10 +22,16 @@ public class Equation {
 
     //Calculates the answer to the equation.
     private void setAnswer(String type) {
-        double num1 = Double.parseDouble(equation.substring(0, equation.indexOf(type) - 1));
-        double num2 = Double.parseDouble(equation.substring(equation.indexOf(type) + 1));
-        System.out.println("num1: " + num1);
-        System.out.println("num2: " + num2);
+        double num1;
+        double num2;
+        if(Integer.parseInt(type) < 2) {
+            num1 = Double.parseDouble(equation.substring(0, equation.indexOf(type) - 1));
+            num2 = Double.parseDouble(equation.substring(equation.indexOf(type) + 1));
+        }
+        else {
+            num1 = Math.floor(Double.parseDouble(equation.substring(0, equation.indexOf(type) - 1)));
+            num2 = Math.floor(Double.parseDouble(equation.substring(equation.indexOf(type) + 1)));
+        }
         switch(type) {
             case "+": answer = num1+num2; answer = changeNum(answer); break;
             case "-": answer = num1-num2; answer = changeNum(answer); break;
@@ -44,6 +50,10 @@ public class Equation {
     }
 
     public void setChosen(boolean choice) { chosen = choice; }
+
+    public void setValue(int newvalue) {
+        value = newvalue;
+    }
 
     public String getEquation() {
         return equation;

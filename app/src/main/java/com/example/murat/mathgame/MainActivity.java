@@ -18,7 +18,6 @@ import java.io.FileReader;
 
 public class MainActivity extends AppCompatActivity {
 
-    File file;
     Game game;
     TextView question1, question2, question3, question4, tokenView;
     EditText editText;
@@ -28,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        file = new File(getFilesDir(), "tokensandbadges.txt");
         game = new Game();
         addition = (Button)findViewById(R.id.addition);
         subtraction = (Button)findViewById(R.id.subtraction);
@@ -139,22 +137,27 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-//        loadProgress();
+        String tokens = game.getTokens() + "";
+        tokenView.setText(tokens);
     }
 
 
     //Checks to see if the answer is correct. If it is, it updates the labels to show their tokens.
     private void checkAnswer(double guess) {
         if(game.getChosenEquation() != null) {
-            System.out.println("yeah");
             if(game.checkAnswer(guess)) {
                 System.out.println("wow");
+                editText.setText("");
                 game.setTokens(game.getTokens() + (1 + game.getChosenEquation().getValue()));
-                //saveProgress();
-                tokenView.setText(game.getTokens() + "");
+                String text = game.getTokens() + "";
+                tokenView.setText(text);
                 game.createNewEquationList(game.getEquationList().get(0).getType());
                 showProblems();
+            }
+            else {
+                game.getChosenEquation().setValue(game.getChosenEquation().getValue()-1);
+                editText.setTextColor(Color.RED);
+
             }
         }
     }
@@ -170,45 +173,5 @@ public class MainActivity extends AppCompatActivity {
         question2.setTextColor(0xFFCE8327);
         question3.setTextColor(0xFFCE8327);
         question4.setTextColor(0xFFCE8327);
-    }
-
-
-    //load function
-    private void loadProgress() {
-        try {
-            BufferedReader bf = new BufferedReader(new FileReader(file));
-            String line;
-            while((line = bf.readLine()) != null) {
-                System.out.println("line: " + line);
-                if(line.substring(0,1).equals("t")) {
-                    game.setTokens(Integer.parseInt(line.substring(1)));
-                }
-                else {
-                    game.setBadges(Integer.parseInt(line.substring(1)));
-                }
-            }
-            bf.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    //save function
-    private void saveProgress() {
-        System.out.println("Saving");
-        try {
-            FileOutputStream fileOutputStream = openFileOutput(file.getName(), Context.MODE_PRIVATE);
-            fileOutputStream.write("t".getBytes());
-            fileOutputStream.write(game.getTokens());
-            fileOutputStream.write("\n".getBytes());
-            fileOutputStream.write("b".getBytes());
-            fileOutputStream.write(game.getBadges());
-            fileOutputStream.close();
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
     }
 }

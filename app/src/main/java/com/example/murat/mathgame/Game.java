@@ -43,8 +43,8 @@ public class Game {
         double num2 = (Math.random() * 19) + 1;
 //        System.out.println("\nnum1: " + num1);
 //        System.out.println("num2: " + num2);
-        num1 = changeNum(num1);
-        num2 = changeNum(num2);
+        num1 = roundQuarter(num1);
+        num2 = roundQuarter(num2);
         equation += (num1 + " ");
         switch(type) {
             case 0: equation += "+ "; break;
@@ -60,8 +60,6 @@ public class Game {
 
     //Checks to see if the answer the player gave is the same as the real answer.
     public boolean checkAnswer(double guess) {
-        System.out.println("ANSWER: " + getChosenEquation().getAnswer());
-        System.out.println("GUESS: " + guess);
         if(guess == getChosenEquation().getAnswer()) {
             return true;
         }
@@ -81,11 +79,18 @@ public class Game {
 
 
     //Rounds numbers to the tenth place.
-    private double changeNum(double num) {
-        num*=100;
-        num+=.50;
-        num = Math.floor(num);
-        num/=100;
+//    private double changeNum(double num) {
+//        num*=100;
+//        num+=.50;
+//        num = Math.floor(num);
+//        num/=100;
+//        return num;
+//    }
+
+    //Rounds numbers to the quarter space
+    private double roundQuarter(double num) {
+        System.out.println("\nnum: " + num);
+        num = (Math.floor((num+0.12)*4))/4;
         return num;
     }
 
@@ -98,6 +103,7 @@ public class Game {
     }
 
     public int getTokens() {
+        System.out.println("tokens: " + tokens);
         return tokens;
     }
 

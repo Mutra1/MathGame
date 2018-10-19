@@ -133,7 +133,7 @@
 
     <Button
         android:id="@+id/shuffle"
-        android:layout_width="95dp"
+        android:layout_width="91dp"
         android:layout_height="34dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -147,23 +147,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.974" />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="376dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/enterAnswer"
@@ -208,6 +191,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:textAlignment="center"
+        android:textColor="@android:color/holo_orange_dark"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -215,6 +199,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.868" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="394dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        android:textColor="?attr/colorPrimaryDark"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.996" />
 
 
 </android.support.constraint.ConstraintLayout>
