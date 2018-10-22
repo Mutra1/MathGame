@@ -6,34 +6,27 @@ public class Equation {
     private double answer;
     private boolean chosen;
 
-    public Equation(String pequation, int ptype, int difficulty) {
+    public Equation(String pequation, int ptype) {
         equation = pequation;
         type = ptype;
         chosen = false;
-        value = getDifficulty(difficulty);
         switch(type) {
-            case 0: setAnswer("+"); break;
-            case 1: setAnswer("-"); break;
-            case 2: setAnswer("*"); break;
-            case 3: setAnswer("/"); break;
+            case 0: setAnswer("+"); value = getDifficulty("+"); break;
+            case 1: setAnswer("-"); value = getDifficulty("-"); break;
+            case 2: setAnswer("*"); value = getDifficulty("*"); break;
+            case 3: setAnswer("/"); value = getDifficulty("/"); break;
         }
     }
 
 
     //Calculates the answer to the equation.
-    private void setAnswer(String type) {
+    private void setAnswer(String ptype) {
         double num1;
         double num2;
-        if(Integer.parseInt(type) < 2) {
-            num1 = Double.parseDouble(equation.substring(0, equation.indexOf(type) - 1));
-            num2 = Double.parseDouble(equation.substring(equation.indexOf(type) + 1));
-        }
-        else {
-            num1 = Math.floor(Double.parseDouble(equation.substring(0, equation.indexOf(type) - 1)));
-            num2 = Math.floor(Double.parseDouble(equation.substring(equation.indexOf(type) + 1)));
-        }
-        switch(type) {
-            case "+": answer = num1+num2; answer = changeNum(answer); break;
+        num1 = Double.parseDouble(equation.substring(0, equation.indexOf(ptype) - 1));
+        num2 = Double.parseDouble(equation.substring(equation.indexOf(ptype) + 1));
+        switch(ptype) {
+            case "+": answer = num1+num2; answer = changeNum(answer); System.out.println(num1 + " + " + num2 + " = " + answer); break;
             case "-": answer = num1-num2; answer = changeNum(answer); break;
             case "*": answer = num1*num2; answer = changeNum(answer); break;
             case "/": answer = num1/num2; answer = changeNum(answer); break;
@@ -50,14 +43,27 @@ public class Equation {
     }
 
     //Sets the difficulty.
-    private int getDifficulty(int hard) {
-        if(hard == 0) {
+    private int getDifficulty(String ptype) {
+        String num1 = equation.substring(equation.indexOf(ptype) + 1);
+        String num2 = equation.substring(0, equation.indexOf(ptype) - 1);
+        System.out.println("\n\nnum1: " + num1);
+        System.out.println("num2: " + num2);
+        System.out.println("\nnum1r: " + num1.substring(num1.indexOf(".")));
+        System.out.println("num2r: " + num2.substring(num2.indexOf(".")));
+
+        //Easy check
+        if(num1.substring(num1.indexOf(".")).equals("0") && num2.substring(num2.indexOf(".")).equals("0")) {
+            System.out.println("\nchoice: 1");
             return 1;
         }
-        if(hard == 1) {
-            return 3;
+
+        //Hard check
+        else if(!num1.substring(num1.indexOf(".")).equals("0") && !num2.substring(num2.indexOf(".")).equals("0")) {
+            System.out.println("choice: 5");
+            return 5;
         }
-        return 5;
+        System.out.println("choice: 3");
+        return 3;
     }
 
     //Decreases the value of the problem.

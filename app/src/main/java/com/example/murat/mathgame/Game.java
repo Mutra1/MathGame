@@ -18,7 +18,7 @@ public class Game {
     public void createNewEquationList(int type) {
         equationList.clear();
         for(int e = 0; e < 4; e++) {
-            equationList.add(new Equation(createEquation(type, e), type, e));
+            equationList.add(new Equation(createEquation(type, e), type));
         }
     }
 
@@ -67,6 +67,7 @@ public class Game {
 
         num1 = roundQuarter(num1);
         num2 = roundQuarter(num2);
+
         equation += (num1 + " ");
         switch(type) {
             case 0: equation += "+ "; break;

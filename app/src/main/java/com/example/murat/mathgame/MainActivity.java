@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.EditText;
 
@@ -20,22 +21,23 @@ import java.io.FileReader;
 public class MainActivity extends AppCompatActivity {
 
     Game game;
-    TextView question1, question2, question3, question4, tokenView, shopTokens, infoLabel;
+    TextView question1, question2, question3, question4, tokenView, shopTokens, infoLabel, badgeCount;
     EditText editText;
     Button addition, subtraction, multiplication, division, shuffle, enterAnswer, shopButton, purchaseButton, returnButton;
+    ImageView badgeShow;
     File file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         file = new File(getFilesDir(), "token.txt");
         game = new Game();
         showGame();
     }
 
-    //Changes xml to the game
+    //Changes xml to game
     private void showGame() {
+        setContentView(R.layout.activity_main);
         addition = (Button)findViewById(R.id.addition);
         subtraction = (Button)findViewById(R.id.subtraction);
         multiplication = (Button)findViewById(R.id.multiplication);
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         question3 = (TextView)findViewById(R.id.question3);
         question4 = (TextView)findViewById(R.id.question4);
         tokenView = (TextView)findViewById(R.id.tokenView);
+        badgeCount = (TextView)findViewById(R.id.badgeCount);
+        badgeShow = (ImageView)findViewById(R.id.badgeShow);
 
 
         addition.setOnClickListener(new View.OnClickListener() {
@@ -151,8 +155,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        String tokens = game.getTokens() + "";
+        String tokens = "Tokens: " + game.getTokens();
+        String badges = "X     " + game.getBadges();
         tokenView.setText(tokens);
+        badgeCount.setText(badges);
     }
 
 
@@ -163,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
         returnButton = (Button)findViewById(R.id.returnButton);
         infoLabel = (TextView)findViewById(R.id.infoLabel);
         shopTokens = (TextView)findViewById(R.id.shopTokens);
-
 
         purchaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
                 showGame();
             }
         });
-
         String text = (int)game.getTokens() + "";
         shopTokens.setText(text);
     }
