@@ -18,7 +18,8 @@ public class Game {
     public void createNewEquationList(int type) {
         equationList.clear();
         for(int e = 0; e < 4; e++) {
-            equationList.add(new Equation(createEquation(type), type));
+            equationList.add(new Equation(createEquation(type, e), type));
+            setDifficulty(e);
         }
     }
 
@@ -37,12 +38,20 @@ public class Game {
 
 
     //Creates the "equation"
-    private String createEquation(int type) {
+    private String createEquation(int type, int difficulty) {
         String equation = "";
-        double num1 = (Math.random() * 19) + 1;
-        double num2 = (Math.random() * 19) + 1;
+
+//        double num1 = (Math.random() * 19) + 1;
+//        double num2 = (Math.random() * 19) + 1;
+        double num1 = 0;
+        double num2 = 0;
+        if (difficulty == 0) {
+            
+        }
+
 //        System.out.println("\nnum1: " + num1);
 //        System.out.println("num2: " + num2);
+
         num1 = roundQuarter(num1);
         num2 = roundQuarter(num2);
         equation += (num1 + " ");
@@ -102,13 +111,12 @@ public class Game {
         badges = newbadges;
     }
 
-    public int getTokens() {
-        System.out.println("tokens: " + tokens);
-        return tokens;
+    public Byte getTokens() {
+        return (byte)tokens;
     }
 
-    public int getBadges() {
-        return badges;
+    public Byte getBadges() {
+        return (byte)badges;
     }
 
     public List<Equation> getEquationList() {

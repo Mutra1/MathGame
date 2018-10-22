@@ -13,21 +13,63 @@ import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 
 public class MainActivity extends AppCompatActivity {
 
     Game game;
-    TextView question1, question2, question3, question4, tokenView;
+    TextView question1, question2, question3, question4, tokenView, shopTokens, infoLabel;
     EditText editText;
-    Button addition, subtraction, multiplication, division, shuffle, enterAnswer, shopButton;
+    Button addition, subtraction, multiplication, division, shuffle, enterAnswer, shopButton, purchaseButton, returnButton;
+    File file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        file = new File(getFilesDir(), "token.txt");
         game = new Game();
+        showGame();
+    }
+
+
+    //Checks to see if the answer is correct. If it is, it updates the labels to show their tokens.
+    private void checkAnswer(double guess) {
+        if(game.getChosenEquation() != null) {
+            if(game.checkAnswer(guess)) {
+                System.out.println("wow");
+                editText.setText("");
+                game.setTokens(game.getTokens() + (1 + game.getChosenEquation().getValue()));
+                String text = game.getTokens() + "";
+                tokenView.setText(text);
+                game.createNewEquationList(game.getEquationList().get(0).getType());
+                showProblems();
+            }
+            else {
+                game.getChosenEquation().setValue(game.getChosenEquation().getValue()-1);
+                editText.setTextColor(Color.RED);
+            }
+        }
+    }
+
+
+    //changes the textviews to be each of the problems
+    private void showProblems() {
+        question1.setText(game.getEquationList().get(0).getEquation());
+        question2.setText(game.getEquationList().get(1).getEquation());
+        question3.setText(game.getEquationList().get(2).getEquation());
+        question4.setText(game.getEquationList().get(3).getEquation());
+        question1.setTextColor(0xFFCE8327);
+        question2.setTextColor(0xFFCE8327);
+        question3.setTextColor(0xFFCE8327);
+        question4.setTextColor(0xFFCE8327);
+    }
+
+
+    //Changes xml to the game
+    private void showGame() {
         addition = (Button)findViewById(R.id.addition);
         subtraction = (Button)findViewById(R.id.subtraction);
         multiplication = (Button)findViewById(R.id.multiplication);
@@ -90,6 +132,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        shopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showShop();
+            }
+        });
 
 
         question1.setOnClickListener(new View.OnClickListener() {
@@ -142,36 +190,78 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //Checks to see if the answer is correct. If it is, it updates the labels to show their tokens.
-    private void checkAnswer(double guess) {
-        if(game.getChosenEquation() != null) {
-            if(game.checkAnswer(guess)) {
-                System.out.println("wow");
-                editText.setText("");
-                game.setTokens(game.getTokens() + (1 + game.getChosenEquation().getValue()));
-                String text = game.getTokens() + "";
-                tokenView.setText(text);
-                game.createNewEquationList(game.getEquationList().get(0).getType());
-                showProblems();
-            }
-            else {
-                game.getChosenEquation().setValue(game.getChosenEquation().getValue()-1);
-                editText.setTextColor(Color.RED);
+    //Changes xml to shop
+    private void showShop() {
+        setContentView(R.layout.shop);
+        purchaseButton = (Button)findViewById(R.id.purchaseButton);
+        returnButton = (Button)findViewById(R.id.returnButton);
+        infoLabel = (TextView)findViewById(R.id.infoLabel);
+        shopTokens = (TextView)findViewById(R.id.shopTokens);
 
+
+        purchaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if((int)game.getTokens() >= 15) {
+                    game.setBadges((int)game.getBadges() + 1);
+                    game.setTokens((int)game.getTokens() - 15);
+                }
             }
+        });
+
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showGame();
+            }
+        });
+
+        String text = (int)game.getTokens() + "";
+        shopTokens.setText(text);
+    }
+
+    //reads file
+    private void readFile() {
+        StringBuilder read = new StringBuilder();
+        try {
+            FileInputStream inputStream = new FileInputStream(file);
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while((line = br.readLine()) != null) {
+                read.append(line);
+            }
+            br.close();
+            String data = new String(read);
+            System.out.println("\n\n\nData: " + data);
+            loadTokens(data);
+        }
+        catch(Exception e) {
+            System.out.println("whoops");
+            e.printStackTrace();
         }
     }
 
 
-    //changes the textviews to be each of the problems
-    private void showProblems() {
-        question1.setText(game.getEquationList().get(0).getEquation());
-        question2.setText(game.getEquationList().get(1).getEquation());
-        question3.setText(game.getEquationList().get(2).getEquation());
-        question4.setText(game.getEquationList().get(3).getEquation());
-        question1.setTextColor(0xFFCE8327);
-        question2.setTextColor(0xFFCE8327);
-        question3.setTextColor(0xFFCE8327);
-        question4.setTextColor(0xFFCE8327);
+    //loads in tokens
+    private void loadTokens(String data) {
+        game.setTokens(Integer.parseInt(data.substring(0,data.indexOf("b"))));
+        game.setBadges(Integer.parseInt(data.substring(data.indexOf("b"))));
     }
+
+    //save function
+    private void saveTokens() {
+        try {
+            FileOutputStream outputStream = openFileOutput(file.getName(), Context.MODE_PRIVATE);
+            outputStream.write(game.getTokens());
+            outputStream.write(("b").getBytes());
+            outputStream.write(game.getBadges());
+            outputStream.close();
+        }
+        catch(Exception e) {
+            System.out.println("save failed");
+        }
+    }
+
+
+
 }
