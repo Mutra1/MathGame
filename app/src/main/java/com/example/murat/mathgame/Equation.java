@@ -10,7 +10,7 @@ public class Equation {
         equation = pequation;
         type = ptype;
         chosen = false;
-        value = difficulty;
+        value = getDifficulty(difficulty);
         switch(type) {
             case 0: setAnswer("+"); break;
             case 1: setAnswer("-"); break;
@@ -49,7 +49,25 @@ public class Equation {
         return num;
     }
 
-    public void setChosen(boolean choice) { chosen = choice; }
+    //Sets the difficulty.
+    private int getDifficulty(int hard) {
+        if(hard == 0) {
+            return 1;
+        }
+        if(hard == 1) {
+            return 3;
+        }
+        return 5;
+    }
+
+    //Decreases the value of the problem.
+    public void decreaseValue() {
+        value--;
+    }
+
+    public void setChosen(boolean choice) {
+        chosen = choice;
+    }
 
     public String getEquation() {
         return equation;
@@ -67,5 +85,7 @@ public class Equation {
         return type;
     }
 
-    public boolean isChosen() { return chosen; }
+    public boolean isChosen() {
+        return chosen;
+    }
 }

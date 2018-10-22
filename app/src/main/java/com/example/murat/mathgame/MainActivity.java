@@ -34,40 +34,6 @@ public class MainActivity extends AppCompatActivity {
         showGame();
     }
 
-
-    //Checks to see if the answer is correct. If it is, it updates the labels to show their tokens.
-    private void checkAnswer(double guess) {
-        if(game.getChosenEquation() != null) {
-            if(game.checkAnswer(guess)) {
-                System.out.println("wow");
-                editText.setText("");
-                game.setTokens(game.getTokens() + (1 + game.getChosenEquation().getValue()));
-                String text = game.getTokens() + "";
-                tokenView.setText(text);
-                game.createNewEquationList(game.getEquationList().get(0).getType());
-                showProblems();
-            }
-            else {
-                game.getChosenEquation().setValue(game.getChosenEquation().getValue()-1);
-                editText.setTextColor(Color.RED);
-            }
-        }
-    }
-
-
-    //changes the textviews to be each of the problems
-    private void showProblems() {
-        question1.setText(game.getEquationList().get(0).getEquation());
-        question2.setText(game.getEquationList().get(1).getEquation());
-        question3.setText(game.getEquationList().get(2).getEquation());
-        question4.setText(game.getEquationList().get(3).getEquation());
-        question1.setTextColor(0xFFCE8327);
-        question2.setTextColor(0xFFCE8327);
-        question3.setTextColor(0xFFCE8327);
-        question4.setTextColor(0xFFCE8327);
-    }
-
-
     //Changes xml to the game
     private void showGame() {
         addition = (Button)findViewById(R.id.addition);
@@ -220,6 +186,39 @@ public class MainActivity extends AppCompatActivity {
         shopTokens.setText(text);
     }
 
+
+    //Checks to see if the answer is correct. If it is, it updates the labels to show their tokens.
+    private void checkAnswer(double guess) {
+        if(game.getChosenEquation() != null) {
+            if(game.checkAnswer(guess)) {
+                editText.setText("");
+                game.setTokens(game.getTokens() + (1 + game.getChosenEquation().getValue()));
+                String text = game.getTokens() + "";
+                tokenView.setText(text);
+                game.createNewEquationList(game.getEquationList().get(0).getType());
+                showProblems();
+            }
+            else {
+                game.getChosenEquation().decreaseValue();
+                editText.setTextColor(Color.RED);
+            }
+        }
+    }
+
+
+    //changes the textviews to be each of the problems
+    private void showProblems() {
+        question1.setText(game.getEquationList().get(0).getEquation());
+        question2.setText(game.getEquationList().get(1).getEquation());
+        question3.setText(game.getEquationList().get(2).getEquation());
+        question4.setText(game.getEquationList().get(3).getEquation());
+        question1.setTextColor(0xFFCE8327);
+        question2.setTextColor(0xFFCE8327);
+        question3.setTextColor(0xFFCE8327);
+        question4.setTextColor(0xFFCE8327);
+    }
+
+
     //reads file
     private void readFile() {
         StringBuilder read = new StringBuilder();
@@ -248,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
         game.setBadges(Integer.parseInt(data.substring(data.indexOf("b"))));
     }
 
+
     //save function
     private void saveTokens() {
         try {
@@ -261,7 +261,4 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("save failed");
         }
     }
-
-
-
 }

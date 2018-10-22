@@ -40,10 +40,8 @@ public class Game {
     private String createEquation(int type, int difficulty) {
         String equation = "";
 
-//        double num1 = (Math.random() * 19) + 1;
-//        double num2 = (Math.random() * 19) + 1;
-        double num1 = 0;
-        double num2 = 0;
+        double num1;
+        double num2;
 
         //Creates numbers based on difficulty
         if (difficulty == 0) {
@@ -64,11 +62,8 @@ public class Game {
 
         else {
             num1 = (Math.random() * 19) + 1;
-            num2 =
+            num2 = (Math.random() * 19) + 1;
         }
-
-//        System.out.println("\nnum1: " + num1);
-//        System.out.println("num2: " + num2);
 
         num1 = roundQuarter(num1);
         num2 = roundQuarter(num2);
@@ -104,19 +99,8 @@ public class Game {
         return null;
     }
 
-
-    //Rounds numbers to the tenth place.
-//    private double changeNum(double num) {
-//        num*=100;
-//        num+=.50;
-//        num = Math.floor(num);
-//        num/=100;
-//        return num;
-//    }
-
     //Rounds numbers to the quarter space
     private double roundQuarter(double num) {
-        System.out.println("\nnum: " + num);
         num = (Math.floor((num+0.12)*4))/4;
         return num;
     }
