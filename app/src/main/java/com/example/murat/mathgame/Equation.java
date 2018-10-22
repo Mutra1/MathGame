@@ -6,11 +6,11 @@ public class Equation {
     private double answer;
     private boolean chosen;
 
-    public Equation(String pequation, int ptype) {
+    public Equation(String pequation, int ptype, int difficulty) {
         equation = pequation;
         type = ptype;
         chosen = false;
-        value = 0;
+        value = difficulty;
         switch(type) {
             case 0: setAnswer("+"); break;
             case 1: setAnswer("-"); break;
@@ -50,10 +50,6 @@ public class Equation {
     }
 
     public void setChosen(boolean choice) { chosen = choice; }
-
-    public void setValue(int newvalue) {
-        value = newvalue;
-    }
 
     public String getEquation() {
         return equation;

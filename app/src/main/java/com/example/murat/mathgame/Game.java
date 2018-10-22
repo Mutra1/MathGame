@@ -18,8 +18,7 @@ public class Game {
     public void createNewEquationList(int type) {
         equationList.clear();
         for(int e = 0; e < 4; e++) {
-            equationList.add(new Equation(createEquation(type, e), type));
-            setDifficulty(e);
+            equationList.add(new Equation(createEquation(type, e), type, e));
         }
     }
 
@@ -45,8 +44,27 @@ public class Game {
 //        double num2 = (Math.random() * 19) + 1;
         double num1 = 0;
         double num2 = 0;
+
+        //Creates numbers based on difficulty
         if (difficulty == 0) {
-            
+            num1 = Math.round((Math.random() * 19) + 1);
+            num2 = Math.round((Math.random() * 19) + 1);
+        }
+
+        else if(difficulty == 1) {
+            if(Math.random() >= 0.5) {
+                num1 = Math.round((Math.random() * 19) + 1);
+                num2 = (Math.random() * 19) + 1;
+            }
+            else {
+                num1 = (Math.random() * 19) + 1;
+                num2 = Math.round((Math.random() * 19) + 1);
+            }
+        }
+
+        else {
+            num1 = (Math.random() * 19) + 1;
+            num2 =
         }
 
 //        System.out.println("\nnum1: " + num1);
