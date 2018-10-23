@@ -44,26 +44,46 @@ public class Equation {
 
     //Sets the difficulty.
     private int getDifficulty(String ptype) {
-        String num1 = equation.substring(equation.indexOf(ptype) + 1);
-        String num2 = equation.substring(0, equation.indexOf(ptype) - 1);
-        System.out.println("\n\nnum1: " + num1);
-        System.out.println("num2: " + num2);
-        System.out.println("\nnum1r: " + num1.substring(num1.indexOf(".")));
-        System.out.println("num2r: " + num2.substring(num2.indexOf(".")));
+        String num1 = equation.substring(0, equation.indexOf(ptype) - 1);
+        String num2 = equation.substring(equation.indexOf(ptype) + 1);
+        System.out.println("Num1: " + num1);
+        System.out.println("num2: "+ num2);
 
-        //Easy check
-        if(num1.substring(num1.indexOf(".")).equals("0") && num2.substring(num2.indexOf(".")).equals("0")) {
-            System.out.println("\nchoice: 1");
-            return 1;
+
+        //Check for addition/subtraction
+        if(type < 2) {
+            //Easy check
+            if (num1.substring(num1.indexOf(".") + 1).equals("0") && num2.substring(num2.indexOf(".") + 1).equals("0")) {
+                return 1;
+            }
+
+            //Hard check
+            else if (!num1.substring(num1.indexOf(".") + 1).equals("0") && !num2.substring(num2.indexOf(".") + 1).equals("0")) {
+                return 5;
+            }
+            return 3;
         }
 
-        //Hard check
-        else if(!num1.substring(num1.indexOf(".")).equals("0") && !num2.substring(num2.indexOf(".")).equals("0")) {
-            System.out.println("choice: 5");
-            return 5;
+        //Check for multiplication/division
+        else {
+            System.out.println("\nwhat?" + num1.substring(0, num1.indexOf(".")));
+            System.out.println("excuse me?: " + num2.substring(0, num2.indexOf(".")));
+            System.out.println("test1: " + num1.substring(0, num1.indexOf(".")).length());
+            System.out.println("test2: " + num2.substring(0, num2.indexOf(".")).length());
+            //Easy check
+            if(num1.substring(0, num1.indexOf(".")).length() == 2 && num2.substring(0, num2.indexOf(".")).length() == 2) {
+                System.out.println("achoice: 1");
+                return 1;
+            }
+
+            //Hard check
+            else if(num1.substring(0, num1.indexOf(".")).length() > 2 && num2.substring(0, num2.indexOf(".")).length() > 2) {
+                System.out.println("achoice: 5");
+                return 5;
+            }
+            System.out.println("achoice: 3");
+            return 3;
         }
-        System.out.println("choice: 3");
-        return 3;
     }
 
     //Decreases the value of the problem.

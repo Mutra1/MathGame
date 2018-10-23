@@ -37,36 +37,57 @@ public class Game {
 
 
     //Creates the "equation"
-    private String createEquation(int type, int difficulty) {
+    private String createEquation(int type, int problem) {
         String equation = "";
 
         double num1;
         double num2;
 
-        //Creates numbers based on difficulty
-        if (difficulty == 0) {
-            num1 = Math.round((Math.random() * 19) + 1);
-            num2 = Math.round((Math.random() * 19) + 1);
-        }
+        //Creates numbers based on problem, which is decided on problem order.
 
-        else if(difficulty == 1) {
-            if(Math.random() >= 0.5) {
+        //Addition and Subtraction
+        if(type < 2) {
+            if (problem == 0) {
                 num1 = Math.round((Math.random() * 19) + 1);
-                num2 = (Math.random() * 19) + 1;
+                num2 = Math.round((Math.random() * 19) + 1);
+            }
+            else if (problem == 1) {
+                if (Math.random() >= 0.5) {
+                    num1 = Math.round((Math.random() * 19) + 1);
+                    num2 = (Math.random() * 19) + 1;
+                }
+                else {
+                    num1 = (Math.random() * 19) + 1;
+                    num2 = Math.round((Math.random() * 19) + 1);
+                }
             }
             else {
                 num1 = (Math.random() * 19) + 1;
-                num2 = Math.round((Math.random() * 19) + 1);
+                num2 = (Math.random() * 19) + 1;
+            }
+            num1 = roundNum(num1);
+            num2 = roundNum(num2);
+        }
+        else {
+            if(problem == 0) {
+                num1 = Math.round((Math.random() * 9) + 1);
+                num2 = Math.round((Math.random() * 9) + 1);
+            }
+            else if(problem == 1) {
+                if (Math.random() >= 0.5) {
+                    num1 = Math.round((Math.random() * 9) + 1);
+                    num2 = Math.round((Math.random() * 11) + 1);
+                }
+                else {
+                    num1 = Math.round((Math.random() * 11) + 1);
+                    num2 = Math.round((Math.random() * 9) + 1);
+                }
+            }
+            else {
+                num1 = Math.round((Math.random() * 11) + 1);
+                num2 = Math.round((Math.random() * 11) + 1);
             }
         }
-
-        else {
-            num1 = (Math.random() * 19) + 1;
-            num2 = (Math.random() * 19) + 1;
-        }
-
-        num1 = roundQuarter(num1);
-        num2 = roundQuarter(num2);
 
         equation += (num1 + " ");
         switch(type) {
@@ -101,8 +122,8 @@ public class Game {
     }
 
     //Rounds numbers to the quarter space
-    private double roundQuarter(double num) {
-        num = (Math.floor((num+0.12)*4))/4;
+    private double roundNum(double num) {
+        num = (Math.floor((num+(1/(4*2)))*4))/4;
         return num;
     }
 

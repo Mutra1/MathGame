@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         showGame();
     }
 
+
     //Changes xml to game
     private void showGame() {
         setContentView(R.layout.activity_main);
@@ -155,8 +156,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        String tokens = "Tokens: " + game.getTokens();
-        String badges = "X     " + game.getBadges();
+        String tokens = "Tokens: " + (int)game.getTokens();
+        String badges = "X     " + (int)game.getBadges();
         tokenView.setText(tokens);
         badgeCount.setText(badges);
     }
@@ -176,6 +177,8 @@ public class MainActivity extends AppCompatActivity {
                 if((int)game.getTokens() >= 15) {
                     game.setBadges((int)game.getBadges() + 1);
                     game.setTokens((int)game.getTokens() - 15);
+                    String text = "Tokens: " + (int)game.getTokens();
+                    infoLabel.setText(text);
                 }
             }
         });
@@ -197,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
             if(game.checkAnswer(guess)) {
                 editText.setText("");
                 game.setTokens(game.getTokens() + (1 + game.getChosenEquation().getValue()));
-                String text = game.getTokens() + "";
+                String text = "Tokens: " + game.getTokens();
                 tokenView.setText(text);
                 game.createNewEquationList(game.getEquationList().get(0).getType());
                 showProblems();
@@ -210,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //changes the textviews to be each of the problems
+    //changes the text views to be each of the problems
     private void showProblems() {
         question1.setText(game.getEquationList().get(0).getEquation());
         question2.setText(game.getEquationList().get(1).getEquation());
