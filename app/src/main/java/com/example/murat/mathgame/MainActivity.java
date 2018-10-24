@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         shuffle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                game.createNewEquationList(game.getEquationList().get(0).getType());
+                game.createNewEquationList(game.getProblemType());
                 showProblems();
             }
         });
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                     game.setBadges((int)game.getBadges() + 1);
                     game.setTokens((int)game.getTokens() - 15);
                     String text = "Tokens: " + (int)game.getTokens();
-                    infoLabel.setText(text);
+                    shopTokens.setText(text);
                 }
             }
         });
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 game.setTokens(game.getTokens() + (1 + game.getChosenEquation().getValue()));
                 String text = "Tokens: " + game.getTokens();
                 tokenView.setText(text);
-                game.createNewEquationList(game.getEquationList().get(0).getType());
+                game.createNewEquationList(game.getProblemType());
                 showProblems();
             }
             else {

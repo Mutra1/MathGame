@@ -4,40 +4,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    private int tokens, badges;
+    private int tokens, badges, problemtype;
     private List<Equation> equationList;
+    private List<String> functionList;
 
     public Game() {
         tokens = 0;
         badges = 0;
         equationList = new ArrayList<>();
+        functionList = new ArrayList<>();
+        functionList.add("+");
+        functionList.add("-");
+        functionList.add("*");
+        functionList.add("/");
     }
 
 
     //Makes a new list of equations
     public void createNewEquationList(int type) {
+        problemtype = type;
         equationList.clear();
         for(int e = 0; e < 4; e++) {
-            equationList.add(new Equation(createEquation(type, e), type));
-        }
-    }
-
-
-    //Sets the equation to be chosen, and the rest of the equations to not be chosen.
-    public void setChosen(int choice) {
-        for(int i = 0; i < equationList.size(); i++) {
-            if(i == choice) {
-                equationList.get(i).setChosen(true);
-            }
-            else {
-                equationList.get(i).setChosen(false);
-            }
+            equationList.add(new Equation(createEquation(e)));
+            equationList.get(e).setValue(getDifficulty(functionList.get(type), problemtype, e));
+            equationList.get(e).setAnswer(getEquationAnswer(functionList.get(problemtype), e));
         }
     }
 
 
     //Creates the "equation"
-    private String createEquation(int type, int problem) {
+    private String createEquation(int problem) {
         String equation = "";
 
         double num1;
@@ -46,7 +42,7 @@ public class Game {
         //Creates numbers based on problem, which is decided on problem order.
 
         //Addition and Subtraction
-        if(type < 2) {
+        if(problemtype < 2) {
             if (problem == 0) {
                 num1 = Math.round((Math.random() * 19) + 1);
                 num2 = Math.round((Math.random() * 19) + 1);
@@ -68,6 +64,8 @@ public class Game {
             num1 = roundNum(num1);
             num2 = roundNum(num2);
         }
+
+        //Multiplication and Division
         else {
             if(problem == 0) {
                 num1 = Math.round((Math.random() * 9) + 1);
@@ -90,7 +88,7 @@ public class Game {
         }
 
         equation += (num1 + " ");
-        switch(type) {
+        switch(problemtype) {
             case 0: equation += "+ "; break;
             case 1: equation += "- "; break;
             case 2: equation += "* "; break;
@@ -99,6 +97,84 @@ public class Game {
         }
         equation += num2;
         return equation;
+    }
+
+
+    //Calculates the answer to the equation.
+    private double getEquationAnswer(String ptype, int problem) {
+        double num1;
+        double num2;
+        double answer;
+        num1 = Double.parseDouble(equationList.get(problem).getEquation().substring(0, equationList.get(problem).getEquation().indexOf(ptype) - 1));
+        num2 = Double.parseDouble(equationList.get(problem).getEquation().substring(equationList.get(problem).getEquation().indexOf(ptype) + 1));
+        switch (ptype) {
+            case "+":
+                answer = num1 + num2;
+                break;
+            case "-":
+                answer = num1 - num2;
+                break;
+            case "*":
+                answer = num1 * num2;
+                break;
+            default:
+                answer = num1 / num2;
+                break;
+        }
+        answer = roundNum(answer);
+        return answer;
+    }
+
+
+    //Sets the difficulty.
+    private int getDifficulty(String ptype, int type, int problem) {
+        String num1 = equationList.get(problem).getEquation().substring(0, equationList.get(problem).getEquation().indexOf(ptype) - 1);
+        String num2 = equationList.get(problem).getEquation().substring(equationList.get(problem).getEquation().indexOf(ptype) + 2);
+
+
+        //Check for addition/subtraction
+        if (type < 2) {
+            //Easy check
+            if (num1.substring(num1.indexOf(".") + 1).equals("0") && num2.substring(num2.indexOf(".") + 1).equals("0")) {
+                return 1;
+            }
+
+            //Hard check
+            else if (!num1.substring(num1.indexOf(".") + 1).equals("0") && !num2.substring(num2.indexOf(".") + 1).equals("0")) {
+                return 5;
+            }
+            return 3;
+        }
+
+        //Check for multiplication/division
+        else {
+            //Easy check
+            if (num1.substring(0, num1.indexOf(".")).length() == 1 && num2.substring(0, num2.indexOf(".")).length() == 1) {
+                System.out.println("achoice: 1");
+                return 1;
+            }
+
+            //Hard check
+            else if (num1.substring(0, num1.indexOf(".")).length() > 1 && num2.substring(0, num2.indexOf(".")).length() > 1) {
+                System.out.println("achoice: 5");
+                return 5;
+            }
+            System.out.println("achoice: 3");
+            return 3;
+        }
+    }
+
+
+    //Sets the equation to be chosen, and the rest of the equations to not be chosen.
+    public void setChosen(int choice) {
+        for(int i = 0; i < equationList.size(); i++) {
+            if(i == choice) {
+                equationList.get(i).setChosen(true);
+            }
+            else {
+                equationList.get(i).setChosen(false);
+            }
+        }
     }
 
 
@@ -127,6 +203,10 @@ public class Game {
         return num;
     }
 
+    public int getProblemType() {
+        return problemtype;
+    }
+
     public void setTokens(int newtokens) {
         tokens = newtokens;
     }
@@ -145,5 +225,9 @@ public class Game {
 
     public List<Equation> getEquationList() {
         return equationList;
+    }
+
+    public List<String> getFunctionList() {
+        return functionList;
     }
 }
