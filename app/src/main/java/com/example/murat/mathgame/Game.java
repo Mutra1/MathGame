@@ -26,21 +26,18 @@ public class Game {
         equationList.clear();
         for(int e = 0; e < 4; e++) {
             equationList.add(new Equation(createEquation(e)));
-            if(problemtype != 3) {
-                equationList.get(e).setValue(getDifficulty(functionList.get(type), problemtype, e));
-                equationList.get(e).setAnswer(getEquationAnswer(functionList.get(problemtype), e));
-            }
+            equationList.get(e).setAnswer(getEquationAnswer(functionList.get(problemtype), e));
+            equationList.get(e).setValue(getDifficulty(functionList.get(type), problemtype, e));
         }
     }
 
 
     //Creates the "equation"
     private String createEquation(int problem) {
-        String equation = "";
-
         //Creates numbers based on the difficulty, which is decided on problem order and problem type.
 
         if(problemtype != 3) {
+            String equation = "";
             double num1;
             double num2;
 
@@ -54,7 +51,8 @@ public class Game {
                     if (Math.random() >= 0.5) {
                         num1 = Math.round((Math.random() * 19) + 1);
                         num2 = (Math.random() * 19) + 1;
-                    } else {
+                    }
+                    else {
                         num1 = (Math.random() * 19) + 1;
                         num2 = Math.round((Math.random() * 19) + 1);
                     }
@@ -82,7 +80,8 @@ public class Game {
                         num1 = Math.round((Math.random() * 11) + 1);
                         num2 = Math.round((Math.random() * 9) + 1);
                     }
-                } else {
+                }
+                else {
                     num1 = Math.round((Math.random() * 11) + 1);
                     num2 = Math.round((Math.random() * 11) + 1);
                 }
@@ -99,9 +98,6 @@ public class Game {
                 case 2:
                     equation += "* ";
                     break;
-                case 3:
-                    equation += "/ ";
-                    break;
                 default:
                     break;
             }
@@ -110,24 +106,23 @@ public class Game {
         }
 
         //Division
-        if(problem == 0) {
-            int num2;
-            int answer;
-            double chance = Math.random();
-            if(chance < 0.25) {
-
-            }
-            else if(chance < 0.5) {
-
-            }
-            else if(chance < 0.75) {
-
-            }
-            else {
-
-            }
-            getDivisionAnswer(num2, answer);
+        int num2;
+        int answer;
+        switch(problem) {
+            case 0:
+                num2 = (int)(Math.random() * 4) + 1;
+                answer = (int)(Math.random() * 4) + 1;
+                break;
+            case 1:
+                num2 = (int)(Math.random() * 4) + 1;
+                answer = (int)(Math.random() * 11) + 1;
+                break;
+            default:
+                num2 = (int)(Math.random() * 11) + 1;
+                answer = (int)(Math.random() * 11) + 1;
         }
+        int num1 = num2 * answer;
+        return (num1 + " / " + num2);
     }
 
 
@@ -149,17 +144,11 @@ public class Game {
                 answer = num1 * num2;
                 break;
             default:
-                answer = 0;
+                answer = num1 / num2;
                 break;
         }
         answer = roundNum(answer);
         return answer;
-    }
-
-
-    //Calculates the first number for division.
-    private double getDivisionAnswer(int num2, int answer) {
-        return answer/num2;
     }
 
 
@@ -183,8 +172,8 @@ public class Game {
             return 3;
         }
 
-        //Check for multiplication/division
-        else {
+        //Check for multiplication
+        else if (type == 2) {
             //Easy check
             if (num1.substring(0, num1.indexOf(".")).length() == 1 && num2.substring(0, num2.indexOf(".")).length() == 1) {
                 System.out.println("achoice: 1");
@@ -198,6 +187,24 @@ public class Game {
             }
             System.out.println("achoice: 3");
             return 3;
+        }
+
+        else {
+            //check
+            if(equationList.get(problem).getAnswer() <= 10) {
+                if(Integer.parseInt(num1) < 10 && Integer.parseInt(num2) < 10) {
+                    System.out.println("1");
+                    return 1;
+                }
+                else {
+                    System.out.println("3");
+                    return 3;
+                }
+            }
+            else {
+                System.out.println("5");
+                return 5;
+            }
         }
     }
 
@@ -262,9 +269,5 @@ public class Game {
 
     public List<Equation> getEquationList() {
         return equationList;
-    }
-
-    public List<String> getFunctionList() {
-        return functionList;
     }
 }
