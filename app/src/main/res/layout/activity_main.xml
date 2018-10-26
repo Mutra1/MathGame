@@ -192,7 +192,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_orange_dark"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -244,14 +244,14 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:textAlignment="gravity"
-        android:textColor="?android:attr/colorPressedHighlight"
+        android:textColor="@color/gold"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.977"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.601" />
+        app:layout_constraintVertical_bias="0.568" />
 
 
 </android.support.constraint.ConstraintLayout>

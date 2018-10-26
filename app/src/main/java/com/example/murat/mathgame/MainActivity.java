@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 showGame();
             }
         });
-        String text = (int)game.getTokens() + "";
+        String text = "Tokens: " + (int)game.getTokens();
         shopTokens.setText(text);
     }
 
@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
         if(game.getChosenEquation() != null) {
             if(game.checkAnswer(guess)) {
                 editText.setText("");
+                editText.setTextColor(Color.BLUE);
                 game.setTokens(game.getTokens() + (1 + game.getChosenEquation().getValue()));
                 String text = "Tokens: " + game.getTokens();
                 tokenView.setText(text);

@@ -26,8 +26,10 @@ public class Game {
         equationList.clear();
         for(int e = 0; e < 4; e++) {
             equationList.add(new Equation(createEquation(e)));
-            equationList.get(e).setValue(getDifficulty(functionList.get(type), problemtype, e));
-            equationList.get(e).setAnswer(getEquationAnswer(functionList.get(problemtype), e));
+            if(problemtype != 3) {
+                equationList.get(e).setValue(getDifficulty(functionList.get(type), problemtype, e));
+                equationList.get(e).setAnswer(getEquationAnswer(functionList.get(problemtype), e));
+            }
         }
     }
 
@@ -36,67 +38,96 @@ public class Game {
     private String createEquation(int problem) {
         String equation = "";
 
-        double num1;
-        double num2;
+        //Creates numbers based on the difficulty, which is decided on problem order and problem type.
 
-        //Creates numbers based on problem, which is decided on problem order.
+        if(problemtype != 3) {
+            double num1;
+            double num2;
 
-        //Addition and Subtraction
-        if(problemtype < 2) {
-            if (problem == 0) {
-                num1 = Math.round((Math.random() * 19) + 1);
-                num2 = Math.round((Math.random() * 19) + 1);
-            }
-            else if (problem == 1) {
-                if (Math.random() >= 0.5) {
+            //Addition and Subtraction
+            if (problemtype < 2) {
+                if (problem == 0) {
                     num1 = Math.round((Math.random() * 19) + 1);
-                    num2 = (Math.random() * 19) + 1;
+                    num2 = Math.round((Math.random() * 19) + 1);
+                }
+                else if (problem == 1) {
+                    if (Math.random() >= 0.5) {
+                        num1 = Math.round((Math.random() * 19) + 1);
+                        num2 = (Math.random() * 19) + 1;
+                    } else {
+                        num1 = (Math.random() * 19) + 1;
+                        num2 = Math.round((Math.random() * 19) + 1);
+                    }
                 }
                 else {
                     num1 = (Math.random() * 19) + 1;
-                    num2 = Math.round((Math.random() * 19) + 1);
+                    num2 = (Math.random() * 19) + 1;
                 }
+                num1 = roundNum(num1);
+                num2 = roundNum(num2);
             }
-            else {
-                num1 = (Math.random() * 19) + 1;
-                num2 = (Math.random() * 19) + 1;
-            }
-            num1 = roundNum(num1);
-            num2 = roundNum(num2);
-        }
 
-        //Multiplication and Division
-        else {
-            if(problem == 0) {
-                num1 = Math.round((Math.random() * 9) + 1);
-                num2 = Math.round((Math.random() * 9) + 1);
-            }
-            else if(problem == 1) {
-                if (Math.random() >= 0.5) {
+            //Multiplication
+            else {
+                if (problem == 0) {
                     num1 = Math.round((Math.random() * 9) + 1);
-                    num2 = Math.round((Math.random() * 11) + 1);
-                }
-                else {
-                    num1 = Math.round((Math.random() * 11) + 1);
                     num2 = Math.round((Math.random() * 9) + 1);
                 }
+                else if (problem == 1) {
+                    if (Math.random() >= 0.5) {
+                        num1 = Math.round((Math.random() * 9) + 1);
+                        num2 = Math.round((Math.random() * 11) + 1);
+                    }
+                    else {
+                        num1 = Math.round((Math.random() * 11) + 1);
+                        num2 = Math.round((Math.random() * 9) + 1);
+                    }
+                } else {
+                    num1 = Math.round((Math.random() * 11) + 1);
+                    num2 = Math.round((Math.random() * 11) + 1);
+                }
             }
-            else {
-                num1 = Math.round((Math.random() * 11) + 1);
-                num2 = Math.round((Math.random() * 11) + 1);
+
+            equation += (num1 + " ");
+            switch (problemtype) {
+                case 0:
+                    equation += "+ ";
+                    break;
+                case 1:
+                    equation += "- ";
+                    break;
+                case 2:
+                    equation += "* ";
+                    break;
+                case 3:
+                    equation += "/ ";
+                    break;
+                default:
+                    break;
             }
+            equation += num2;
+            return equation;
         }
 
-        equation += (num1 + " ");
-        switch(problemtype) {
-            case 0: equation += "+ "; break;
-            case 1: equation += "- "; break;
-            case 2: equation += "* "; break;
-            case 3: equation += "/ "; break;
-            default: break;
+        //Division
+        if(problem == 0) {
+            int num2;
+            int answer;
+            double chance = Math.random();
+            if(chance < 0.25) {
+
+            }
+            else if(chance < 0.5) {
+
+            }
+            else if(chance < 0.75) {
+
+            }
+            else {
+
+            }
+            getDivisionAnswer(num2, answer);
         }
-        equation += num2;
-        return equation;
     }
 
 
@@ -118,11 +149,17 @@ public class Game {
                 answer = num1 * num2;
                 break;
             default:
-                answer = num1 / num2;
+                answer = 0;
                 break;
         }
         answer = roundNum(answer);
         return answer;
+    }
+
+
+    //Calculates the first number for division.
+    private double getDivisionAnswer(int num2, int answer) {
+        return answer/num2;
     }
 
 
