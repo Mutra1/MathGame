@@ -40,12 +40,26 @@ public class MainActivity extends AppCompatActivity {
     private void showGame() {
         setContentView(R.layout.activity_main);
         addition = (Button)findViewById(R.id.addition);
+        addition.setBackgroundColor(0xFF3B67DB);
+        addition.setTextColor(0xFFF1F1F1);
         subtraction = (Button)findViewById(R.id.subtraction);
+        subtraction.setBackgroundColor(0xFF3B67DB);
+        subtraction.setTextColor(0xFFF1F1F1);
         multiplication = (Button)findViewById(R.id.multiplication);
+        multiplication.setBackgroundColor(0xFF3B67DB);
+        multiplication.setTextColor(0xFFF1F1F1);
         division = (Button)findViewById(R.id.division);
+        division.setBackgroundColor(0xFF3B67DB);
+        division.setTextColor(0xFFF1F1F1);
         shuffle = (Button)findViewById(R.id.shuffle);
+        shuffle.setBackgroundColor(0xFF3B67DB);
+        shuffle.setTextColor(0xFFF1F1F1);
         enterAnswer = (Button)findViewById(R.id.enterAnswer);
+        enterAnswer.setBackgroundColor(0xFF3EC563);
+        enterAnswer.setTextColor(0xFFF1F1F1);
         shopButton = (Button)findViewById(R.id.shopButton);
+        shopButton.setBackgroundColor(0xFFD19828);
+        shopButton.setTextColor(0xFFF1F1F1);
         editText = (EditText)findViewById(R.id.editText);
         question1 = (TextView)findViewById(R.id.question1);
         question2 = (TextView)findViewById(R.id.question2);
@@ -114,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         question1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                question1.setTextColor(0xFF2FBD45);
+                question1.setTextColor(0xFF3EC563);
                 question2.setTextColor(0xFFCE8327);
                 question3.setTextColor(0xFFCE8327);
                 question4.setTextColor(0xFFCE8327);
@@ -126,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 question1.setTextColor(0xFFCE8327);
-                question2.setTextColor(0xFF2FBD45);
+                question2.setTextColor(0xFF3EC563);
                 question3.setTextColor(0xFFCE8327);
                 question4.setTextColor(0xFFCE8327);
                 game.setChosen(1);
@@ -138,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 question1.setTextColor(0xFFCE8327);
                 question2.setTextColor(0xFFCE8327);
-                question3.setTextColor(0xFF2FBD45);
+                question3.setTextColor(0xFF3EC563);
                 question4.setTextColor(0xFFCE8327);
                 game.setChosen(2);
             }
@@ -150,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 question1.setTextColor(0xFFCE8327);
                 question2.setTextColor(0xFFCE8327);
                 question3.setTextColor(0xFFCE8327);
-                question4.setTextColor(0xFF2FBD45);
+                question4.setTextColor(0xFF3EC563);
                 game.setChosen(3);
             }
         });
@@ -167,7 +181,11 @@ public class MainActivity extends AppCompatActivity {
     private void showShop() {
         setContentView(R.layout.shop);
         purchaseButton = (Button)findViewById(R.id.purchaseButton);
+        purchaseButton.setBackgroundColor(0xFF3EC563);
+        purchaseButton.setTextColor(0xFFF1F1F1);
         returnButton = (Button)findViewById(R.id.returnButton);
+        returnButton.setBackgroundColor(0xFFD19828);
+        returnButton.setTextColor(0xFFF1F1F1);
         infoLabel = (TextView)findViewById(R.id.infoLabel);
         shopTokens = (TextView)findViewById(R.id.shopTokens);
 
@@ -204,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
                 tokenView.setText(text);
                 game.createNewEquationList(game.getProblemType());
                 showProblems();
+                saveTokens();
             }
             else {
                 game.getChosenEquation().decreaseValue();
@@ -242,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
             loadTokens(data);
         }
         catch(Exception e) {
-            System.out.println("whoops");
+            System.out.println("\nwhoops it failed");
             e.printStackTrace();
         }
     }
@@ -263,9 +282,10 @@ public class MainActivity extends AppCompatActivity {
             outputStream.write(("b").getBytes());
             outputStream.write(game.getBadges());
             outputStream.close();
+            System.out.println("\n\n\nSuccess!");
         }
         catch(Exception e) {
-            System.out.println("save failed");
+            System.out.println("\nsave failed");
         }
     }
 }

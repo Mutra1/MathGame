@@ -38,11 +38,11 @@ public class Game {
 
         if(problemtype != 3) {
             String equation = "";
-            double num1;
-            double num2;
 
             //Addition and Subtraction
             if (problemtype < 2) {
+                double num1;
+                double num2;
                 if (problem == 0) {
                     num1 = Math.round((Math.random() * 19) + 1);
                     num2 = Math.round((Math.random() * 19) + 1);
@@ -63,46 +63,65 @@ public class Game {
                 }
                 num1 = roundNum(num1);
                 num2 = roundNum(num2);
+
+                equation += (num1 + " ");
+                switch (problemtype) {
+                    case 0:
+                        equation += "+ ";
+                        break;
+                    case 1:
+                        equation += "- ";
+                        break;
+                    case 2:
+                        equation += "* ";
+                        break;
+                    default:
+                        break;
+                }
+                equation += num2;
+                return equation;
             }
 
             //Multiplication
             else {
+                int num1;
+                int num2;
                 if (problem == 0) {
-                    num1 = Math.round((Math.random() * 9) + 1);
-                    num2 = Math.round((Math.random() * 9) + 1);
+                    num1 = (int)Math.round((Math.random() * 9) + 1);
+                    num2 = (int)Math.round((Math.random() * 9) + 1);
                 }
                 else if (problem == 1) {
                     if (Math.random() >= 0.5) {
-                        num1 = Math.round((Math.random() * 9) + 1);
-                        num2 = Math.round((Math.random() * 11) + 1);
+                        num1 = (int)Math.round((Math.random() * 9) + 1);
+                        num2 = (int)Math.round((Math.random() * 11) + 1);
                     }
                     else {
-                        num1 = Math.round((Math.random() * 11) + 1);
-                        num2 = Math.round((Math.random() * 9) + 1);
+                        num1 = (int)Math.round((Math.random() * 11) + 1);
+                        num2 = (int)Math.round((Math.random() * 9) + 1);
                     }
                 }
                 else {
-                    num1 = Math.round((Math.random() * 11) + 1);
-                    num2 = Math.round((Math.random() * 11) + 1);
+                    num1 = (int)Math.round((Math.random() * 11) + 1);
+                    num2 = (int)Math.round((Math.random() * 11) + 1);
                 }
+                equation += (num1 + " ");
+                switch (problemtype) {
+                    case 0:
+                        equation += "+ ";
+                        break;
+                    case 1:
+                        equation += "- ";
+                        break;
+                    case 2:
+                        equation += "* ";
+                        break;
+                    default:
+                        break;
+                }
+                equation += num2;
+                return equation;
             }
 
-            equation += (num1 + " ");
-            switch (problemtype) {
-                case 0:
-                    equation += "+ ";
-                    break;
-                case 1:
-                    equation += "- ";
-                    break;
-                case 2:
-                    equation += "* ";
-                    break;
-                default:
-                    break;
-            }
-            equation += num2;
-            return equation;
         }
 
         //Division
@@ -175,13 +194,13 @@ public class Game {
         //Check for multiplication
         else if (type == 2) {
             //Easy check
-            if (num1.substring(0, num1.indexOf(".")).length() == 1 && num2.substring(0, num2.indexOf(".")).length() == 1) {
+            if (num1.length() == 1 && num2.length() == 1) {
                 System.out.println("achoice: 1");
                 return 1;
             }
 
             //Hard check
-            else if (num1.substring(0, num1.indexOf(".")).length() > 1 && num2.substring(0, num2.indexOf(".")).length() > 1) {
+            else if (num1.length() > 1 && num2.length() > 1) {
                 System.out.println("achoice: 5");
                 return 5;
             }
