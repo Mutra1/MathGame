@@ -181,48 +181,42 @@ public class Game {
         if (type < 2) {
             //Easy check
             if (num1.substring(num1.indexOf(".") + 1).equals("0") && num2.substring(num2.indexOf(".") + 1).equals("0")) {
-                return 1;
+                return 2;
             }
 
             //Hard check
             else if (!num1.substring(num1.indexOf(".") + 1).equals("0") && !num2.substring(num2.indexOf(".") + 1).equals("0")) {
-                return 5;
+                return 6;
             }
-            return 3;
+            return 4;
         }
 
         //Check for multiplication
         else if (type == 2) {
             //Easy check
             if (num1.length() == 1 && num2.length() == 1) {
-                System.out.println("achoice: 1");
-                return 1;
+                return 2;
             }
 
             //Hard check
             else if (num1.length() > 1 && num2.length() > 1) {
-                System.out.println("achoice: 5");
-                return 5;
+                return 6;
             }
-            System.out.println("achoice: 3");
-            return 3;
+            return 4;
         }
 
         else {
             //check
             if(equationList.get(problem).getAnswer() <= 10) {
                 if(Integer.parseInt(num1) < 10 && Integer.parseInt(num2) < 10) {
-                    System.out.println("1");
-                    return 1;
+                    return 2;
                 }
                 else {
-                    System.out.println("3");
-                    return 3;
+                    return 4;
                 }
             }
             else {
-                System.out.println("5");
-                return 5;
+                return 6;
             }
         }
     }
@@ -278,12 +272,12 @@ public class Game {
         badges = newbadges;
     }
 
-    public Byte getTokens() {
-        return (byte)tokens;
+    public int getTokens() {
+        return tokens;
     }
 
-    public Byte getBadges() {
-        return (byte)badges;
+    public int getBadges() {
+        return badges;
     }
 
     public List<Equation> getEquationList() {

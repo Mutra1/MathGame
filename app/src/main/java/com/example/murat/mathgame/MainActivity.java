@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         file = new File(getFilesDir(), "token.txt");
         game = new Game();
         showGame();
+        readFile();
     }
 
 
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         shopButton.setBackgroundColor(0xFFD19828);
         shopButton.setTextColor(0xFFF1F1F1);
         editText = (EditText)findViewById(R.id.editText);
+        editText.setTextColor(0xFF46AB69);
         question1 = (TextView)findViewById(R.id.question1);
         question2 = (TextView)findViewById(R.id.question2);
         question3 = (TextView)findViewById(R.id.question3);
@@ -170,8 +172,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        String tokens = "Tokens: " + (int)game.getTokens();
-        String badges = "X     " + (int)game.getBadges();
+        String tokens = "Tokens: " + game.getTokens();
+        String badges = "X     " + game.getBadges();
         tokenView.setText(tokens);
         badgeCount.setText(badges);
     }
@@ -192,11 +194,12 @@ public class MainActivity extends AppCompatActivity {
         purchaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if((int)game.getTokens() >= 15) {
-                    game.setBadges((int)game.getBadges() + 1);
-                    game.setTokens((int)game.getTokens() - 15);
-                    String text = "Tokens: " + (int)game.getTokens();
+                if(game.getTokens() >= 15) {
+                    game.setBadges(game.getBadges() + 1);
+                    game.setTokens(game.getTokens() - 15);
+                    String text = "Tokens: " + game.getTokens();
                     shopTokens.setText(text);
+                    saveProgress();
                 }
             }
         });
@@ -207,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
                 showGame();
             }
         });
-        String text = "Tokens: " + (int)game.getTokens();
+        String text = "Tokens: " + game.getTokens();
         shopTokens.setText(text);
     }
 
@@ -216,23 +219,27 @@ public class MainActivity extends AppCompatActivity {
     private void checkAnswer(double guess) {
         if(game.getChosenEquation() != null) {
             if(game.checkAnswer(guess)) {
+                editText.setTextColor(0xFF46AB69);
                 editText.setText("");
-                game.setTokens(game.getTokens() + (1 + game.getChosenEquation().getValue()));
+                game.setTokens(game.getTokens() + (game.getChosenEquation().getValue()));
+                fadeText(game.getChosenEquation().getValue());
                 String text = "Tokens: " + game.getTokens();
                 tokenView.setText(text);
                 game.createNewEquationList(game.getProblemType());
                 showProblems();
-                saveTokens();
+                saveProgress();
             }
             else {
-                game.getChosenEquation().decreaseValue();
+                if(game.getChosenEquation().getValue() > 0) {
+                    game.getChosenEquation().decreaseValue();
+                }
                 editText.setTextColor(Color.RED);
             }
         }
     }
 
 
-    //changes the text views to be each of the problems
+    //Changes the text views to be each of the problems
     private void showProblems() {
         question1.setText(game.getEquationList().get(0).getEquation());
         question2.setText(game.getEquationList().get(1).getEquation());
@@ -245,11 +252,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //reads file
+    //Displays how many points the user has just earned, and then has it fade away.
+    private void fadeText(int number) {
+
+    }
+
+
+    //Reads the text file containing the amount of badges and tokens the player last had.
     private void readFile() {
         StringBuilder read = new StringBuilder();
         try {
-            FileInputStream inputStream = new FileInputStream(file);
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
             while((line = br.readLine()) != null) {
@@ -259,28 +271,35 @@ public class MainActivity extends AppCompatActivity {
             String data = new String(read);
             System.out.println("\n\n\nData: " + data);
             loadTokens(data);
+
         }
         catch(Exception e) {
-            System.out.println("\nwhoops it failed");
             e.printStackTrace();
+            System.out.println("\n\n\n\n\n\n\n\nwhoops it failed");
         }
     }
 
 
     //loads in tokens
     private void loadTokens(String data) {
-        game.setTokens(Integer.parseInt(data.substring(0,data.indexOf("b"))));
-        game.setBadges(Integer.parseInt(data.substring(data.indexOf("b"))));
+//        game.setTokens(Integer.parseInt(data.substring(0,data.indexOf("b"))));
+//        game.setBadges(Integer.parseInt(data.substring(data.indexOf("b") + 1)));
+        game.setTokens(0);
+        game.setBadges(0);
+        tokenView.setText("Tokens: " + game.getTokens());
+        badgeCount.setText("X    "  + game.getBadges());
     }
 
 
     //save function
-    private void saveTokens() {
+    private void saveProgress() {
         try {
             FileOutputStream outputStream = openFileOutput(file.getName(), Context.MODE_PRIVATE);
-            outputStream.write(game.getTokens());
+            String tokens = game.getTokens() + "";
+            String badges = game.getBadges() + "";
+            outputStream.write(tokens.getBytes());
             outputStream.write(("b").getBytes());
-            outputStream.write(game.getBadges());
+            outputStream.write(badges.getBytes());
             outputStream.close();
             System.out.println("\n\n\nSuccess!");
         }
@@ -289,3 +308,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
+//Fade text: https://stackoverflow.com/questions/8627211/how-to-make-text-fade-in-and-out-in-android
