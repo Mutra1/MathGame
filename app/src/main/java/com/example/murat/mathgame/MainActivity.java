@@ -5,6 +5,9 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,10 +24,10 @@ import java.io.FileReader;
 public class MainActivity extends AppCompatActivity {
 
     Game game;
-    TextView question1, question2, question3, question4, tokenView, shopTokens, infoLabel, badgeCount;
+    TextView question1, question2, question3, question4, tokenView, shopTokens, infoLabel, badgeCount, increaseView;
     EditText editText;
     Button addition, subtraction, multiplication, division, shuffle, enterAnswer, shopButton, purchaseButton, returnButton;
-    ImageView badgeShow;
+    ImageView badgeShow, tokenShow;
     File file;
 
     @Override
@@ -68,8 +71,10 @@ public class MainActivity extends AppCompatActivity {
         question3 = (TextView)findViewById(R.id.question3);
         question4 = (TextView)findViewById(R.id.question4);
         tokenView = (TextView)findViewById(R.id.tokenView);
+        increaseView = (TextView)findViewById(R.id.increaseView);
         badgeCount = (TextView)findViewById(R.id.badgeCount);
         badgeShow = (ImageView)findViewById(R.id.badgeShow);
+        tokenShow = (ImageView)findViewById(R.id.tokenShow);
 
 
         addition.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +120,9 @@ public class MainActivity extends AppCompatActivity {
         enterAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(Double.parseDouble((editText.getText().toString())));
+                if(!editText.getText().toString().isEmpty()) {
+                    checkAnswer(Double.parseDouble((editText.getText().toString())));
+                }
             }
         });
 
@@ -172,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        String tokens = "Tokens: " + game.getTokens();
+        String tokens = "X     " + game.getTokens();
         String badges = "X     " + game.getBadges();
         tokenView.setText(tokens);
         badgeCount.setText(badges);
@@ -197,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 if(game.getTokens() >= 15) {
                     game.setBadges(game.getBadges() + 1);
                     game.setTokens(game.getTokens() - 15);
-                    String text = "Tokens: " + game.getTokens();
+                    String text = "X     " + game.getTokens();
                     shopTokens.setText(text);
                     saveProgress();
                 }
@@ -210,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                 showGame();
             }
         });
-        String text = "Tokens: " + game.getTokens();
+        String text = "X     " + game.getTokens();
         shopTokens.setText(text);
     }
 
@@ -223,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                 editText.setText("");
                 game.setTokens(game.getTokens() + (game.getChosenEquation().getValue()));
                 fadeText(game.getChosenEquation().getValue());
-                String text = "Tokens: " + game.getTokens();
+                String text = "X     " + game.getTokens();
                 tokenView.setText(text);
                 game.createNewEquationList(game.getProblemType());
                 showProblems();
@@ -254,7 +261,16 @@ public class MainActivity extends AppCompatActivity {
 
     //Displays how many points the user has just earned, and then has it fade away.
     private void fadeText(int number) {
-
+        increaseView.setText("+ " + number);
+        final Animation fadein = new AlphaAnimation(0.0f, 1.0f);
+        final Animation fadeout = new AlphaAnimation(1.0f, 0.0f);
+        AnimationSet textFade = new AnimationSet(true);
+        fadein.setDuration(100);
+        fadeout.setDuration(1100);
+        textFade.addAnimation(fadeout);
+        textFade.setStartOffset(3500);
+        textFade.addAnimation(fadein);
+        increaseView.startAnimation(textFade);
     }
 
 
@@ -286,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
 //        game.setBadges(Integer.parseInt(data.substring(data.indexOf("b") + 1)));
         game.setTokens(0);
         game.setBadges(0);
-        tokenView.setText("Tokens: " + game.getTokens());
+        tokenView.setText("X    " + game.getTokens());
         badgeCount.setText("X    "  + game.getBadges());
     }
 
