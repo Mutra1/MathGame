@@ -179,8 +179,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        String tokens = "X     " + game.getTokens();
-        String badges = "X     " + game.getBadges();
+        String tokens = "x     " + game.getTokens();
+        String badges = "x     " + game.getBadges();
         tokenView.setText(tokens);
         badgeCount.setText(badges);
     }
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 if(game.getTokens() >= 15) {
                     game.setBadges(game.getBadges() + 1);
                     game.setTokens(game.getTokens() - 15);
-                    String text = "X     " + game.getTokens();
+                    String text = "x     " + game.getTokens();
                     shopTokens.setText(text);
                     saveProgress();
                 }
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                 showGame();
             }
         });
-        String text = "X     " + game.getTokens();
+        String text = "x     " + game.getTokens();
         shopTokens.setText(text);
     }
 
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                 editText.setText("");
                 game.setTokens(game.getTokens() + (game.getChosenEquation().getValue()));
                 fadeText(game.getChosenEquation().getValue());
-                String text = "X     " + game.getTokens();
+                String text = "x     " + game.getTokens();
                 tokenView.setText(text);
                 game.createNewEquationList(game.getProblemType());
                 showProblems();
@@ -262,15 +262,16 @@ public class MainActivity extends AppCompatActivity {
     //Displays how many points the user has just earned, and then has it fade away.
     private void fadeText(int number) {
         increaseView.setText("+ " + number);
-        final Animation fadein = new AlphaAnimation(0.0f, 1.0f);
         final Animation fadeout = new AlphaAnimation(1.0f, 0.0f);
-        AnimationSet textFade = new AnimationSet(true);
-        fadein.setDuration(100);
-        fadeout.setDuration(1100);
-        textFade.addAnimation(fadeout);
-        textFade.setStartOffset(3500);
-        textFade.addAnimation(fadein);
-        increaseView.startAnimation(textFade);
+        fadeout.setDuration(900);
+        fadeout.setStartOffset(1100);
+        increaseView.startAnimation(fadeout);
+        setTimeout(2000, new Runnable() {
+            @Override
+            public void run() {
+                increaseView.setText("");
+            }
+        });
     }
 
 
@@ -285,25 +286,21 @@ public class MainActivity extends AppCompatActivity {
             }
             br.close();
             String data = new String(read);
-            System.out.println("\n\n\nData: " + data);
             loadTokens(data);
 
         }
         catch(Exception e) {
             e.printStackTrace();
-            System.out.println("\n\n\n\n\n\n\n\nwhoops it failed");
         }
     }
 
 
     //loads in tokens
     private void loadTokens(String data) {
-//        game.setTokens(Integer.parseInt(data.substring(0,data.indexOf("b"))));
-//        game.setBadges(Integer.parseInt(data.substring(data.indexOf("b") + 1)));
-        game.setTokens(0);
-        game.setBadges(0);
-        tokenView.setText("X    " + game.getTokens());
-        badgeCount.setText("X    "  + game.getBadges());
+        game.setTokens(Integer.parseInt(data.substring(0,data.indexOf("b"))));
+        game.setBadges(Integer.parseInt(data.substring(data.indexOf("b") + 1)));
+        tokenView.setText("x    " + game.getTokens());
+        badgeCount.setText("x    "  + game.getBadges());
     }
 
 
@@ -311,17 +308,24 @@ public class MainActivity extends AppCompatActivity {
     private void saveProgress() {
         try {
             FileOutputStream outputStream = openFileOutput(file.getName(), Context.MODE_PRIVATE);
-            String tokens = game.getTokens() + "";
-            String badges = game.getBadges() + "";
+//            String tokens = game.getTokens() + "";
+//            String badges = game.getBadges() + "";
+            String tokens = "0";
+            String badges = "0";
             outputStream.write(tokens.getBytes());
             outputStream.write(("b").getBytes());
             outputStream.write(badges.getBytes());
             outputStream.close();
-            System.out.println("\n\n\nSuccess!");
         }
         catch(Exception e) {
             System.out.println("\nsave failed");
         }
+    }
+
+
+    //timer function
+    public void setTimeout(final int delay, Runnable function) {
+        new android.os.Handler().postDelayed(function, delay);
     }
 }
 

@@ -260,6 +260,7 @@ public class Game {
         return num;
     }
 
+
     public int getProblemType() {
         return problemtype;
     }
