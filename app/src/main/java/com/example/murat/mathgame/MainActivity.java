@@ -137,10 +137,10 @@ public class MainActivity extends AppCompatActivity {
         question1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                question1.setTextColor(0xFF3EC563);
-                question2.setTextColor(0xFFCE8327);
-                question3.setTextColor(0xFFCE8327);
-                question4.setTextColor(0xFFCE8327);
+                question1.setTextColor(0xFF3ECD65);
+                question2.setTextColor(0xFFDC9552);
+                question3.setTextColor(0xFFDC9552);
+                question4.setTextColor(0xFFDC9552);
                 game.setChosen(0);
             }
         });
@@ -148,10 +148,10 @@ public class MainActivity extends AppCompatActivity {
         question2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                question1.setTextColor(0xFFCE8327);
-                question2.setTextColor(0xFF3EC563);
-                question3.setTextColor(0xFFCE8327);
-                question4.setTextColor(0xFFCE8327);
+                question1.setTextColor(0xFFDC9552);
+                question2.setTextColor(0xFF3ECD65);
+                question3.setTextColor(0xFFDC9552);
+                question4.setTextColor(0xFFDC9552);
                 game.setChosen(1);
             }
         });
@@ -159,10 +159,10 @@ public class MainActivity extends AppCompatActivity {
         question3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                question1.setTextColor(0xFFCE8327);
-                question2.setTextColor(0xFFCE8327);
-                question3.setTextColor(0xFF3EC563);
-                question4.setTextColor(0xFFCE8327);
+                question1.setTextColor(0xFFDC9552);
+                question2.setTextColor(0xFFDC9552);
+                question3.setTextColor(0xFF3ECD65);
+                question4.setTextColor(0xFFDC9552);
                 game.setChosen(2);
             }
         });
@@ -170,10 +170,10 @@ public class MainActivity extends AppCompatActivity {
         question4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                question1.setTextColor(0xFFCE8327);
-                question2.setTextColor(0xFFCE8327);
-                question3.setTextColor(0xFFCE8327);
-                question4.setTextColor(0xFF3EC563);
+                question1.setTextColor(0xFFDC9552);
+                question2.setTextColor(0xFFDC9552);
+                question3.setTextColor(0xFFDC9552);
+                question4.setTextColor(0xFF3ECD65);
                 game.setChosen(3);
             }
         });
@@ -308,10 +308,8 @@ public class MainActivity extends AppCompatActivity {
     private void saveProgress() {
         try {
             FileOutputStream outputStream = openFileOutput(file.getName(), Context.MODE_PRIVATE);
-//            String tokens = game.getTokens() + "";
-//            String badges = game.getBadges() + "";
-            String tokens = "0";
-            String badges = "0";
+            String tokens = game.getTokens() + "";
+            String badges = game.getBadges() + "";
             outputStream.write(tokens.getBytes());
             outputStream.write(("b").getBytes());
             outputStream.write(badges.getBytes());
