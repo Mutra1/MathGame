@@ -25,8 +25,8 @@
 
     <Button
         android:id="@+id/purchaseButton"
-        android:layout_width="165dp"
-        android:layout_height="64dp"
+        android:layout_width="168dp"
+        android:layout_height="49dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.698" />
+        app:layout_constraintVertical_bias="0.639" />
 
     <TextView
         android:id="@+id/shopTokens"
@@ -104,6 +104,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.229"
+        app:layout_constraintVertical_bias="0.156"
         app:srcCompat="@drawable/goldbadge" />
 </android.support.constraint.ConstraintLayout>
