@@ -1,5 +1,7 @@
 package com.example.murat.mathgame;
 
+import android.media.MediaPlayer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -206,7 +208,7 @@ public class Game {
         }
 
         else {
-            //check
+            //check division
             if(equationList.get(problem).getAnswer() <= 10) {
                 if(Integer.parseInt(num1) < 10 && Integer.parseInt(num2) < 10) {
                     return 2;
@@ -220,6 +222,19 @@ public class Game {
             }
         }
     }
+
+
+    //Plays a sound depending on whether the player got a problem right or wrong.
+//    public void playSound(boolean correct) {
+//        if(correct) {
+//            final MediaPlayer mp = MediaPlayer.create(this, );
+//            mp.start();
+//        }
+//        else {
+//            final MediaPlayer mp = MediaPlayer.create(this, );
+//            mp.start();
+//        }
+//    }
 
 
     //Sets the equation to be chosen, and the rest of the equations to not be chosen.
