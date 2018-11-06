@@ -20,7 +20,7 @@ import java.io.FileReader;
 public class MainActivity extends AppCompatActivity {
 
     Game game;
-    TextView question1, question2, question3, question4, tokenView, shopTokens, infoLabel, badgeCount, increaseView;
+    TextView question1, question2, question3, question4, tokenCount, shopTokens, infoLabel, badgeCount, increaseView;
     EditText editText;
     Button addition, subtraction, multiplication, division, shuffle, enterAnswer, shopButton, purchaseButton, returnButton;
     ImageView badgeShow, tokenShow;
@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         file = new File(getFilesDir(), "token.txt");
         game = new Game();
-        showGame();
         readFile();
+        showGame();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
@@ -67,11 +67,22 @@ public class MainActivity extends AppCompatActivity {
         question2 = (TextView)findViewById(R.id.question2);
         question3 = (TextView)findViewById(R.id.question3);
         question4 = (TextView)findViewById(R.id.question4);
-        tokenView = (TextView)findViewById(R.id.tokenView);
+        tokenCount = (TextView)findViewById(R.id.tokenCount);
         increaseView = (TextView)findViewById(R.id.increaseView);
         badgeCount = (TextView)findViewById(R.id.badgeCount);
         badgeShow = (ImageView)findViewById(R.id.badgeShow);
         tokenShow = (ImageView)findViewById(R.id.tokenShow);
+
+        if(game.isFirstTime()) {
+            editText.setVisibility(View.GONE);
+            enterAnswer.setVisibility(View.GONE);
+            shuffle.setVisibility(View.GONE);
+            shopButton.setVisibility(View.GONE);
+            tokenCount.setVisibility(View.INVISIBLE);
+            tokenShow.setVisibility(View.GONE);
+            badgeCount.setVisibility(View.INVISIBLE);
+            badgeShow.setVisibility(View.GONE);
+        }
 
 
         addition.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +150,8 @@ public class MainActivity extends AppCompatActivity {
                 question3.setTextColor(0xFFDC9552);
                 question4.setTextColor(0xFFDC9552);
                 game.setChosen(0);
+                editText.setVisibility(View.VISIBLE);
+                enterAnswer.setVisibility(View.VISIBLE);
             }
         });
 
@@ -150,6 +163,8 @@ public class MainActivity extends AppCompatActivity {
                 question3.setTextColor(0xFFDC9552);
                 question4.setTextColor(0xFFDC9552);
                 game.setChosen(1);
+                editText.setVisibility(View.VISIBLE);
+                enterAnswer.setVisibility(View.VISIBLE);
             }
         });
 
@@ -161,6 +176,8 @@ public class MainActivity extends AppCompatActivity {
                 question3.setTextColor(0xFF3ECD65);
                 question4.setTextColor(0xFFDC9552);
                 game.setChosen(2);
+                editText.setVisibility(View.VISIBLE);
+                enterAnswer.setVisibility(View.VISIBLE);
             }
         });
 
@@ -172,13 +189,15 @@ public class MainActivity extends AppCompatActivity {
                 question3.setTextColor(0xFFDC9552);
                 question4.setTextColor(0xFF3ECD65);
                 game.setChosen(3);
+                editText.setVisibility(View.VISIBLE);
+                enterAnswer.setVisibility(View.VISIBLE);
             }
         });
 
 
         String tokens = "x     " + game.getTokens();
         String badges = "x     " + game.getBadges();
-        tokenView.setText(tokens);
+        tokenCount.setText(tokens);
         badgeCount.setText(badges);
     }
 
@@ -223,15 +242,24 @@ public class MainActivity extends AppCompatActivity {
     private void checkAnswer(double guess) {
         if(game.getChosenEquation() != null) {
             if(game.checkAnswer(guess)) {
+                shopButton.setVisibility(View.VISIBLE);
+                tokenShow.setVisibility(View.VISIBLE);
+                tokenCount.setVisibility(View.VISIBLE);
+                badgeShow.setVisibility(View.VISIBLE);
+                badgeCount.setVisibility(View.VISIBLE);
                 editText.setTextColor(0xFF46AB69);
                 editText.setText("");
                 game.setTokens(game.getTokens() + (game.getChosenEquation().getValue()));
                 fadeText(game.getChosenEquation().getValue());
                 String text = "x     " + game.getTokens();
-                tokenView.setText(text);
+                String btext = "x     " + game.getBadges();
+                tokenCount.setText(text);
+                badgeCount.setText(btext);
                 game.createNewEquationList(game.getProblemType());
                 showProblems();
                 saveProgress();
+
+                game.setFirstTime(false);
 //                game.playSound(true);
             }
             else {
@@ -255,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
         question2.setTextColor(0xFFCE8327);
         question3.setTextColor(0xFFCE8327);
         question4.setTextColor(0xFFCE8327);
+        shuffle.setVisibility(View.VISIBLE);
     }
 
 
@@ -296,10 +325,12 @@ public class MainActivity extends AppCompatActivity {
 
     //loads in tokens
     private void loadTokens(String data) {
+        System.out.println("data: " + data);
         game.setTokens(Integer.parseInt(data.substring(0,data.indexOf("b"))));
         game.setBadges(Integer.parseInt(data.substring(data.indexOf("b") + 1)));
-        tokenView.setText("x    " + game.getTokens());
-        badgeCount.setText("x    "  + game.getBadges());
+        if(game.getBadges() == 0 && game.getTokens() == 0) {
+            game.setFirstTime(true);
+        }
     }
 
 
@@ -307,11 +338,11 @@ public class MainActivity extends AppCompatActivity {
     private void saveProgress() {
         try {
             FileOutputStream outputStream = openFileOutput(file.getName(), Context.MODE_PRIVATE);
-            String tokens = game.getTokens() + "";
-            String badges = game.getBadges() + "";
-            outputStream.write(tokens.getBytes());
+//            String tokens = game.getTokens() + "";
+//            String badges = game.getBadges() + "";
+            outputStream.write("0".getBytes());
             outputStream.write(("b").getBytes());
-            outputStream.write(badges.getBytes());
+            outputStream.write("0".getBytes());
             outputStream.close();
         }
         catch(Exception e) {

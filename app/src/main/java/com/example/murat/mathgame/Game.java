@@ -7,12 +7,14 @@ import java.util.List;
 
 public class Game {
     private int tokens, badges, problemtype;
+    private boolean firsttime;
     private List<Equation> equationList;
     private List<String> functionList;
 
     public Game() {
         tokens = 0;
         badges = 0;
+        firsttime = false;
         equationList = new ArrayList<>();
         functionList = new ArrayList<>();
         functionList.add("+");
@@ -276,8 +278,8 @@ public class Game {
     }
 
 
-    public int getProblemType() {
-        return problemtype;
+    public void setFirstTime(boolean pfirsttime) {
+        firsttime = pfirsttime;
     }
 
     public void setTokens(int newtokens) {
@@ -288,12 +290,20 @@ public class Game {
         badges = newbadges;
     }
 
+    public int getProblemType() {
+        return problemtype;
+    }
+
     public int getTokens() {
         return tokens;
     }
 
     public int getBadges() {
         return badges;
+    }
+
+    public boolean isFirstTime() {
+        return firsttime;
     }
 
     public List<Equation> getEquationList() {
