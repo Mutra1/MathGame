@@ -41,26 +41,12 @@ public class MainActivity extends AppCompatActivity {
     private void showGame() {
         setContentView(R.layout.activity_main);
         addition = (Button)findViewById(R.id.addition);
-        addition.setBackgroundColor(0xFF3B67DB);
-        addition.setTextColor(0xFFF1F1F1);
         subtraction = (Button)findViewById(R.id.subtraction);
-        subtraction.setBackgroundColor(0xFF3B67DB);
-        subtraction.setTextColor(0xFFF1F1F1);
         multiplication = (Button)findViewById(R.id.multiplication);
-        multiplication.setBackgroundColor(0xFF3B67DB);
-        multiplication.setTextColor(0xFFF1F1F1);
         division = (Button)findViewById(R.id.division);
-        division.setBackgroundColor(0xFF3B67DB);
-        division.setTextColor(0xFFF1F1F1);
         shuffle = (Button)findViewById(R.id.shuffle);
-        shuffle.setBackgroundColor(0xFF3B67DB);
-        shuffle.setTextColor(0xFFF1F1F1);
         enterAnswer = (Button)findViewById(R.id.enterAnswer);
-        enterAnswer.setBackgroundColor(0xFF3EC563);
-        enterAnswer.setTextColor(0xFFF1F1F1);
         shopButton = (Button)findViewById(R.id.shopButton);
-        shopButton.setBackgroundColor(0xFFD19828);
-        shopButton.setTextColor(0xFFF1F1F1);
         editText = (EditText)findViewById(R.id.editText);
         editText.setTextColor(0xFF46AB69);
         question1 = (TextView)findViewById(R.id.question1);
@@ -206,11 +192,7 @@ public class MainActivity extends AppCompatActivity {
     private void showShop() {
         setContentView(R.layout.shop);
         purchaseButton = (Button)findViewById(R.id.purchaseButton);
-        purchaseButton.setBackgroundColor(0xFF3EC563);
-        purchaseButton.setTextColor(0xFFF1F1F1);
         returnButton = (Button)findViewById(R.id.returnButton);
-        returnButton.setBackgroundColor(0xFFD19828);
-        returnButton.setTextColor(0xFFF1F1F1);
         infoLabel = (TextView)findViewById(R.id.infoLabel);
         shopTokens = (TextView)findViewById(R.id.shopTokens);
 
@@ -220,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 if(game.getTokens() >= 15) {
                     game.setBadges(game.getBadges() + 1);
                     game.setTokens(game.getTokens() - 15);
-                    String text = "x     " + game.getTokens();
+                    String text = "x    " + game.getTokens();
                     shopTokens.setText(text);
                     saveProgress();
                 }
@@ -325,7 +307,6 @@ public class MainActivity extends AppCompatActivity {
 
     //loads in tokens
     private void loadTokens(String data) {
-        System.out.println("data: " + data);
         game.setTokens(Integer.parseInt(data.substring(0,data.indexOf("b"))));
         game.setBadges(Integer.parseInt(data.substring(data.indexOf("b") + 1)));
         if(game.getBadges() == 0 && game.getTokens() == 0) {
@@ -338,15 +319,17 @@ public class MainActivity extends AppCompatActivity {
     private void saveProgress() {
         try {
             FileOutputStream outputStream = openFileOutput(file.getName(), Context.MODE_PRIVATE);
-//            String tokens = game.getTokens() + "";
-//            String badges = game.getBadges() + "";
+            String tokens = game.getTokens() + "";
+            String badges = game.getBadges() + "";
+//            outputStream.write(tokens.getBytes());
             outputStream.write("0".getBytes());
             outputStream.write(("b").getBytes());
             outputStream.write("0".getBytes());
+//            outputStream.write(badges.getBytes());
             outputStream.close();
         }
         catch(Exception e) {
-            System.out.println("\nsave failed");
+            e.printStackTrace();
         }
     }
 
@@ -358,3 +341,4 @@ public class MainActivity extends AppCompatActivity {
 }
 
 //Fade text: https://stackoverflow.com/questions/8627211/how-to-make-text-fade-in-and-out-in-android
+//Round button: https://stackoverflow.com/questions/6054562/how-to-make-the-corners-of-a-button-round
