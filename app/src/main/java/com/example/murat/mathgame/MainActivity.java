@@ -181,8 +181,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        String tokens = "x     " + game.getTokens();
-        String badges = "x     " + game.getBadges();
+        String tokens = "x    " + game.getTokens();
+        String badges = "x    " + game.getBadges();
         tokenCount.setText(tokens);
         badgeCount.setText(badges);
     }
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 showGame();
             }
         });
-        String text = "x     " + game.getTokens();
+        String text = "x    " + game.getTokens();
         shopTokens.setText(text);
     }
 
@@ -233,8 +233,8 @@ public class MainActivity extends AppCompatActivity {
                 editText.setText("");
                 game.setTokens(game.getTokens() + (game.getChosenEquation().getValue()));
                 fadeText(game.getChosenEquation().getValue());
-                String text = "x     " + game.getTokens();
-                String btext = "x     " + game.getBadges();
+                String text = "x    " + game.getTokens();
+                String btext = "x    " + game.getBadges();
                 tokenCount.setText(text);
                 badgeCount.setText(btext);
                 game.createNewEquationList(game.getProblemType());
@@ -300,6 +300,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
         catch(Exception e) {
+            System.out.println("ERRORLOAD");
+            loadTokens("0b0");
             e.printStackTrace();
         }
     }
@@ -321,11 +323,11 @@ public class MainActivity extends AppCompatActivity {
             FileOutputStream outputStream = openFileOutput(file.getName(), Context.MODE_PRIVATE);
             String tokens = game.getTokens() + "";
             String badges = game.getBadges() + "";
-//            outputStream.write(tokens.getBytes());
-            outputStream.write("0".getBytes());
+            outputStream.write(tokens.getBytes());
+//            outputStream.write("0".getBytes());
             outputStream.write(("b").getBytes());
-            outputStream.write("0".getBytes());
-//            outputStream.write(badges.getBytes());
+//            outputStream.write("0".getBytes());
+            outputStream.write(badges.getBytes());
             outputStream.close();
         }
         catch(Exception e) {
