@@ -302,7 +302,6 @@ public class MainActivity extends AppCompatActivity {
         catch(Exception e) {
             System.out.println("ERRORLOAD");
             loadTokens("0b0");
-            e.printStackTrace();
         }
     }
 

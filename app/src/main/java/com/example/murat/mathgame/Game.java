@@ -1,7 +1,5 @@
 package com.example.murat.mathgame;
 
-import android.media.MediaPlayer;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -224,19 +222,6 @@ public class Game {
             }
         }
     }
-
-
-    //Plays a sound depending on whether the player got a problem right or wrong.
-//    public void playSound(boolean correct) {
-//        if(correct) {
-//            final MediaPlayer mp = MediaPlayer.create(this, );
-//            mp.start();
-//        }
-//        else {
-//            final MediaPlayer mp = MediaPlayer.create(this, );
-//            mp.start();
-//        }
-//    }
 
 
     //Sets the equation to be chosen, and the rest of the equations to not be chosen.
